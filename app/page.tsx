@@ -1,22 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import {
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
 import { modelList } from "@/lib/const";
+import ModelSelect from "@/components/common/model-select";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/theme/theme-toggle";
 
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
 
   return (
-    <main className="min-h-[100dvh] py-24 px-12 max-w-[70ch] mx-auto">
+    <main className="min-h-[100dvh] py-24 px-6 max-w-[70ch] mx-auto">
       <div>
         <div>
           <Icon icon="fluent-emoji:robot" width="3.5rem" />
@@ -27,22 +22,10 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-3">
           <div className="text-muted-foreground shrink-0">Based on OpenAI API</div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="text-muted-foreground">
-                {model}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuRadioGroup value={model} onValueChange={setModel}>
-                {modelList.map((model) => (
-                  <DropdownMenuRadioItem value={model} key={model}>
-                    {model}
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
+        </div>
+        <div>
+          <ThemeToggle></ThemeToggle>
         </div>
       </div>
     </main>
