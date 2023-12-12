@@ -13,9 +13,9 @@ export default function Home() {
   return (
     <main className="min-h-[100dvh] py-24 px-6 max-w-[70ch] mx-auto">
       <div>
-        <div>
+        <div className="flex items-start justify-between">
           <Icon icon="fluent-emoji:robot" width="3.5rem" />
-          <div></div>
+          <ThemeToggle></ThemeToggle>
         </div>
         <div className="font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent">
           chatchat
@@ -25,7 +25,9 @@ export default function Home() {
           <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
         </div>
         <div>
-          <ThemeToggle></ThemeToggle>
+          <Button variant="outline">Edit</Button>
+          <Button variant="ghost">Cancel</Button>
+          <Button>Save</Button>
         </div>
       </div>
     </main>
