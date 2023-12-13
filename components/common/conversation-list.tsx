@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 export default function ConversationList() {
   return (
     <>
-      <div className="flex item-start gap-3 py-4 px-2 hover:dark:bg-accent/30 hover:bg-accent/60 transition">
+      <div className="flex item-start gap-3 py-4 px-2 md:hover:dark:bg-accent/30 md:hover:bg-accent/60 transition">
         <div>
           <Icon icon="gravity-ui:ghost" color="#18a058" width="2rem"></Icon>
         </div>
@@ -14,7 +14,7 @@ export default function ConversationList() {
           </p>
         </div>
       </div>
-      <div className="flex item-start flex-row-reverse gap-3 py-4 px-2 hover:dark:bg-accent/30 hover:bg-accent/60 transition">
+      <div className="flex item-start flex-row-reverse gap-3 py-4 px-2 md:hover:dark:bg-accent/30 md:hover:bg-accent/60 transition">
         <div>
           <Icon icon="gravity-ui:ghost" color="#18a058" flip="horizontal" width="2rem"></Icon>
         </div>
