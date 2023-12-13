@@ -1,20 +1,25 @@
 import { isDefined } from "@/lib/is";
 import { Button, ButtonProps } from "./button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 
 export interface TooltipButtonProps extends ButtonProps {
   tooltip?: string | ReactNode;
   children?: React.ReactNode;
 }
 
-export default function TooltipButton({ children, tooltip, ...props }: TooltipButtonProps) {
+const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(function TooltipButton(
+  { children, tooltip, ...props },
+  ref,
+) {
   if (isDefined(tooltip)) {
     return (
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
-            <Button {...props}>{children}</Button>
+          <TooltipTrigger asChild>
+            <Button {...props} ref={ref}>
+              {children}
+            </Button>
           </TooltipTrigger>
           <TooltipContent>{tooltip}</TooltipContent>
         </Tooltip>
@@ -23,4 +28,6 @@ export default function TooltipButton({ children, tooltip, ...props }: TooltipBu
   }
 
   return <Button {...props}>{children}</Button>;
-}
+});
+
+export default TooltipButton;
