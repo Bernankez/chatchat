@@ -15,7 +15,7 @@ import { useBreakpoint } from "../hooks/use-breakpoint";
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
   const [mounted, setMounted] = useState(false);
-  const { settingsPanelOpen } = useSettingsStore();
+  const { settingsPanelOpen, setSettingsPanelOpen } = useSettingsStore();
   const { greaterOrEqual } = useBreakpoint();
 
   const asideWidth = "24rem";
@@ -53,7 +53,15 @@ export default function Home() {
           className={`shrink-0 transition-[max-width] duration-500 ease-in-out ${
             settingsPanelOpen ? "max-w-sm" : "max-w-0"
           }`}>
-          <SettingsPanel style={{ width: asideWidth }} className="p-6"></SettingsPanel>
+          <div style={{ width: asideWidth }} className="relative p-6">
+            <button
+              type="button"
+              className="absolute rounded-sm right-4 top-4 transition-opacity opacity-70 hover:opacity-100 hover:cursor-pointer data-[state=open]:bg-secondary"
+              onClick={() => setSettingsPanelOpen(false)}>
+              <Icon icon="lucide:x"></Icon>
+            </button>
+            <SettingsPanel></SettingsPanel>
+          </div>
         </aside>
       )}
     </div>
