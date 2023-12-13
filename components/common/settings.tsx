@@ -4,9 +4,13 @@ import { Icon } from "@iconify/react";
 import TooltipButton from "../ui/tooltip-button";
 import { Skeleton } from "../ui/skeleton";
 import SettingsPanel from "./settings-panel";
+import { useSettingsStore } from "@/store/settings-store";
+import { useBreakpoint } from "@/hooks/use-breakpoint";
 
 export default function Settings() {
   const [mounted, setMounted] = useState(false);
+  const { setSettingsPanelOpen, settingsPanelOpen } = useSettingsStore();
+  const { smaller } = useBreakpoint();
 
   useEffect(() => {
     setMounted(true);
@@ -17,13 +21,21 @@ export default function Settings() {
   }
 
   return (
-    <Sheet modal={false}>
+    <Sheet modal={false} open={settingsPanelOpen} onOpenChange={setSettingsPanelOpen}>
       <SheetTrigger asChild>
-        <TooltipButton variant="outline" size="icon" tooltip="Settings">
+        <TooltipButton
+          variant="outline"
+          size="icon"
+          tooltip="Settings"
+          onClick={() => setSettingsPanelOpen(!settingsPanelOpen)}>
           <Icon icon="lucide:settings" width="1.1rem"></Icon>
         </TooltipButton>
       </SheetTrigger>
-      <SettingsPanel type="sheet"></SettingsPanel>
+      {smaller("xl") && (
+        <SheetContent className="w-screen">
+          <SettingsPanel></SettingsPanel>
+        </SheetContent>
+      )}
     </Sheet>
   );
 }

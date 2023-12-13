@@ -1,40 +1,27 @@
-import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet";
+import { CSSProperties } from "react";
 import { Button } from "../ui/button";
+import { useSettingsStore } from "@/store/settings-store";
 
 export interface SettingsPanelProps {
-  type?: "sheet" | "section";
+  style?: CSSProperties;
+  className?: string;
+  onClose?: () => void;
 }
 
 export default function SettingsPanel(props: SettingsPanelProps) {
-  const { type = "sheet" } = props;
-
-  if (type === "sheet") {
-    return (
-      <SheetContent className="w-screen">
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>Make changes to your profile here. Click save when you are done.</SheetDescription>
-        </SheetHeader>
-        <div className="grid gap-4 py-4"></div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    );
-  }
+  const { onClose, className, style } = props;
+  const settingsStore = useSettingsStore();
 
   return (
-    <div className="max-w-sm p-6">
-      <div className="flex flex-col space-y-2">
+    <div className={className} style={style}>
+      <div className="flex flex-col space-y-2 text-center sm:text-start">
         <div className="text-lg font-semibold text-foreground">Edit profile</div>
         <div className="text-sm text-muted-foreground">
           Make changes to your profile here. Click save when you are done.
         </div>
       </div>
       <div className="grid gap-4 py-4"></div>
-      <div className="flex justify-end space-x-2">
+      <div className="flex flex-col-reverse sm:flex-row justify-end space-x-2">
         <Button type="submit">Save changes</Button>
       </div>
     </div>

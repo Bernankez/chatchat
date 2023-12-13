@@ -9,10 +9,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ConversationSettings from "@/components/common/conversation-settings";
 import Settings from "@/components/common/settings";
 import SettingsPanel from "@/components/common/settings-panel";
+import { useSettingsStore } from "@/store/settings-store";
+import { useBreakpoint } from "../hooks/use-breakpoint";
 
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
   const [mounted, setMounted] = useState(false);
+  const { settingsPanelOpen } = useSettingsStore();
+  const { greaterOrEqual } = useBreakpoint();
+
+  const asideWidth = "24rem";
 
   useEffect(() => {
     setMounted(true);
@@ -41,9 +47,15 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <section>
-        <SettingsPanel type="section"></SettingsPanel>
-      </section>
+      {mounted && greaterOrEqual("xl") && (
+        <aside
+          style={{ width: asideWidth }}
+          className={`shrink-0 transition-[max-width] duration-500 ease-in-out ${
+            settingsPanelOpen ? "max-w-sm" : "max-w-0"
+          }`}>
+          <SettingsPanel style={{ width: asideWidth }} className="p-6"></SettingsPanel>
+        </aside>
+      )}
     </div>
   );
 }
