@@ -1,13 +1,18 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Button } from "../ui/button";
 import { Icon } from "@iconify/react";
-import { useMemo } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { useEffect, useMemo, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+import TooltipButton from "../ui/tooltip-button";
 
 export default function DarkToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const icon = useMemo(() => {
     if (theme === "dark") {
@@ -30,16 +35,18 @@ export default function DarkToggle() {
     }
   }
 
+  if (!mounted) {
+    return <Skeleton className="w-10 h-10"></Skeleton>;
+  }
+
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button variant="outline" size="icon" onClick={toggleTheme}>
-            <Icon icon={icon}></Icon>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{theme}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <TooltipButton
+      variant="outline"
+      size="icon"
+      className="capitalize"
+      onClick={toggleTheme}
+      tooltip={<span className="capitalize">{theme}</span>}>
+      <Icon icon={icon} width="1.1rem"></Icon>
+    </TooltipButton>
   );
 }
