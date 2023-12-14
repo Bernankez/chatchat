@@ -1,19 +1,38 @@
 .content pre {
-  background-color: #64748b10;
-  font-size: 0.8rem;
-  padding: 0.4rem 1rem;
+  background-color: #7373730e;
 }
 
-.content .hljs {
+.dark .content pre {
+  background-color: #73737330;
+}
+
+.content code {
   background-color: transparent;
 }
+
+.content :not(pre) code {
+  background-color: #7373730e;
+  padding: .15rem .5rem;
+  margin: 0 .25rem;
+  border-radius: .5rem;
+}
+
+.dark .content :not(pre) code {
+  background-color: #73737330;
+}
+
+.content code::before,
+.content code::after {
+  content: "";
+}
+
 
 .content table {
   font-size: 0.8em;
 }
 
 .content table thead tr {
-  background-color: #64748b40;
+  background-color: #73737330;
   text-align: left;
 }
 
@@ -23,5 +42,5 @@
 }
 
 .content table tbody tr:last-of-type {
-  border-bottom: 2px solid #64748b40;
+  border-bottom: 2px solid #7373730e;
 }

@@ -73,7 +73,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), ...fontFamily.sans],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography"), ...fontFamily.sans],
 };
 
 export default config;

@@ -35,7 +35,7 @@ export default function Home() {
             <ThemeToggle></ThemeToggle>
           </div>
         </div>
-        <div className="my-3 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent">
+        <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent">
           chatchat
         </div>
         <div className="flex items-center gap-3">
