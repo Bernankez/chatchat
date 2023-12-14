@@ -2,17 +2,14 @@
 
 import { useTheme } from "next-themes";
 import { Icon } from "@iconify/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Skeleton } from "../ui/skeleton";
 import TooltipButton from "../ui/tooltip-button";
+import { useMounted } from "@/hooks/use-mounted";
 
 export default function DarkToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   const icon = useMemo(() => {
     if (theme === "dark") {

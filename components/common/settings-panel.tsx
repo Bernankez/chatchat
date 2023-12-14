@@ -10,7 +10,6 @@ export interface SettingsPanelProps {
 
 export default function SettingsPanel(props: SettingsPanelProps) {
   const { onClose, className, style } = props;
-  const settingsStore = useSettingsStore();
 
   return (
     <div className={className} style={style}>
