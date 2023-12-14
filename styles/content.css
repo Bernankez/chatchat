@@ -42,5 +42,5 @@
 }
 
 .content table tbody tr:last-of-type {
-  border-bottom: 2px solid #7373730e;
+  border-bottom: 1px solid var(--tw-prose-td-borders);
 }
