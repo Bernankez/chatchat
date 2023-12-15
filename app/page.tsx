@@ -9,14 +9,17 @@ import Settings from "@/components/common/settings";
 import SettingsPanel from "@/components/common/settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
 import { useBreakpoint } from "../hooks/use-breakpoint";
-import ConversationList from "@/components/common/conversation-list";
+import ConversationList from "@/components/conversation/conversation-list";
 import { useMounted } from "@/hooks/use-mounted";
 import Placeholder from "@/components/ui/placeholder";
+import ConversationSend from "@/components/conversation/conversation-send";
+import ConversationSettings from "@/components/conversation/conversation-settings";
+import WideScreen from "@/components/theme/wide-screen";
 
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
   const mounted = useMounted();
-  const { settingsPanelOpen, setSettingsPanelOpen } = useSettingsStore();
+  const { settingsPanelOpen, setSettingsPanelOpen, wideScreenMode } = useSettingsStore();
   const { greaterOrEqual } = useBreakpoint();
 
   const asideWidth = "24rem";
@@ -25,13 +28,17 @@ export default function Home() {
   return (
     <div className="flex ease-in-out duration-500 transition-[padding]" style={{ paddingRight: pagePaddingRight }}>
       {/* Main Content */}
-      <main className="min-h-[100dvh] py-24 px-6 max-w-[70ch] w-full mx-auto">
+      <main
+        className={`min-h-[100dvh] py-24 px-6 w-full mx-auto ease-in-out duration-500 transition-[max-width_padding] ${
+          mounted && wideScreenMode ? "max-w-full xl:px-24 2xl:px-40" : "max-w-[70ch]"
+        }`}>
         <div className="flex items-start justify-between">
           <Placeholder skeleton="w-12 h-12">
             <Icon icon="fluent-emoji:ghost" width="3rem" />
           </Placeholder>
           <div className="flex gap-3">
             <Settings></Settings>
+            <WideScreen></WideScreen>
             <ThemeToggle></ThemeToggle>
           </div>
         </div>
@@ -43,7 +50,13 @@ export default function Home() {
           <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
         </div>
         <div>{/* <ConversationSettings></ConversationSettings> */}</div>
-        <ConversationList className="mt-3"></ConversationList>
+        <div className="mt-3">
+          <ConversationList></ConversationList>
+          <ConversationList role="user"></ConversationList>
+        </div>
+        <div className="mt-3">
+          <ConversationSend></ConversationSend>
+        </div>
       </main>
       {/* Settings Panel */}
       {mounted && greaterOrEqual("xl") && (

@@ -46,7 +46,7 @@ export default function DecodeContent({ content }: DecodeContentProps) {
 
   return (
     <div
-      className="content prose prose-neutral dark:prose-invert"
+      className="max-w-none content prose prose-neutral dark:prose-invert"
       dangerouslySetInnerHTML={{ __html: decodedContent }}></div>
   );
 }

@@ -5,6 +5,8 @@ import { immer } from "zustand/middleware/immer";
 interface SettingsState {
   settingsPanelOpen: boolean;
   setSettingsPanelOpen: (open: boolean) => void;
+  wideScreenMode: boolean;
+  setWideScreenMode: (mode: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -15,6 +17,12 @@ export const useSettingsStore = create<SettingsState>()(
         setSettingsPanelOpen: (open) => {
           set((state) => {
             state.settingsPanelOpen = open;
+          });
+        },
+        wideScreenMode: false,
+        setWideScreenMode: (mode) => {
+          set((state) => {
+            state.wideScreenMode = mode;
           });
         },
       })),

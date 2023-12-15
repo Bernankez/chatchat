@@ -17,6 +17,10 @@ export default function SettingsPanel(props: SettingsPanelProps) {
         <div className="text-lg font-semibold text-foreground">Edit profile</div>
         <div className="text-sm text-muted-foreground">
           Make changes to your profile here. Click save when you are done.
+          <br />
+          默认对话上下文长度
+          <br />
+          情感参数
         </div>
       </div>
       <div className="grid gap-4 py-4"></div>

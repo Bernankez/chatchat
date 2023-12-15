@@ -1,6 +1,6 @@
 import { Role } from "@/lib/types";
 import { Icon } from "@iconify/react";
-import DecodeContent from "./decode-content";
+import DecodeContent from "../common/decode-content";
 import Placeholder from "../ui/placeholder";
 
 export interface ConversationListProps {
@@ -12,7 +12,6 @@ export default function ConversationList({ role = "assistant", className }: Conv
   const response = `
 当然可以。以下是一段示例的Markdown内容，你可以用来测试\`markdown-it\`解析器：
 
-\`\`\`markdown
 # Markdown 示例内容
 
 这是一个**Markdown**示例，用于测试。
@@ -83,12 +82,14 @@ function sayHello() {
 
   return (
     <div
-      className={`flex item-start gap-3 py-4 px-2 rounded-sm md:hover:bg-accent/30 transition ${
+      className={`flex item-start gap-3 w-full py-6 px-3 rounded-sm md:hover:bg-accent/30 transition ${
         role === "user" ? "flex-row-reverse" : ""
-      } ${className}`}>
+      } ${className || ""}`}>
       <div>
         {role === "user" ? (
-          <Icon icon="simple-icons:ghost" width="1.75rem" color="#c14344"></Icon>
+          <Placeholder skeleton="w-7 h-7">
+            <Icon icon="simple-icons:ghost" width="1.75rem" color="#c14344"></Icon>
+          </Placeholder>
         ) : (
           <Placeholder skeleton="w-7 h-7">
             <Icon icon="gravity-ui:ghost" width="1.75rem" className="text-orange-500 dark:text-orange-400"></Icon>
