@@ -9,12 +9,8 @@ export default function WideScreen() {
 
   return (
     <Placeholder skeleton="w-10 h-10">
-      <Toggle asChild pressed={wideScreenMode}>
-        <TooltipButton
-          variant="outline"
-          size="icon"
-          tooltip="Wide Screen Mode"
-          onClick={() => setWideScreenMode(!wideScreenMode)}>
+      <Toggle asChild pressed={wideScreenMode} onPressedChange={setWideScreenMode}>
+        <TooltipButton variant="outline" size="icon" tooltip="Wide Screen Mode">
           <Icon icon="lucide:move-horizontal" width="1.1rem"></Icon>
         </TooltipButton>
       </Toggle>

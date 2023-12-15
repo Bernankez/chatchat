@@ -5,6 +5,7 @@ import SettingsPanel from "./settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
 import { useBreakpoint } from "@/hooks/use-breakpoint";
 import Placeholder from "../ui/placeholder";
+import { Toggle } from "../ui/toggle";
 
 export default function Settings() {
   const { setSettingsPanelOpen, settingsPanelOpen } = useSettingsStore();
@@ -13,15 +14,13 @@ export default function Settings() {
   return (
     <Placeholder skeleton="w-10 h-10">
       <Sheet modal={false} open={settingsPanelOpen} onOpenChange={setSettingsPanelOpen}>
-        <SheetTrigger asChild>
-          <TooltipButton
-            variant="outline"
-            size="icon"
-            tooltip="Settings"
-            onClick={() => setSettingsPanelOpen(!settingsPanelOpen)}>
-            <Icon icon="lucide:settings" width="1.1rem"></Icon>
-          </TooltipButton>
-        </SheetTrigger>
+        <Toggle asChild pressed={settingsPanelOpen} onPressedChange={setSettingsPanelOpen}>
+          <SheetTrigger asChild>
+            <TooltipButton variant="outline" size="icon" tooltip="Settings">
+              <Icon icon="lucide:settings" width="1.1rem"></Icon>
+            </TooltipButton>
+          </SheetTrigger>
+        </Toggle>
         {smaller("xl") && (
           <SheetContent className="w-screen">
             <SettingsPanel></SettingsPanel>
