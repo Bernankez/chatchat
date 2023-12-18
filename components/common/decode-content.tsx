@@ -1,47 +1,27 @@
-import markdownIt from "markdown-it";
-// @ts-ignore
-import markdownKatex from "markdown-it-katex";
-import markdownHl from "markdown-it-highlightjs";
+import useMarkdownIt from "@/hooks/use-markdown-it";
+import MarkdownIt from "markdown-it";
+import { useEffect, useState } from "react";
 
 export interface DecodeContentProps {
   content: string | (() => string);
 }
 
 export default function DecodeContent({ content }: DecodeContentProps) {
-  const md = markdownIt({
-    html: true,
-    xhtmlOut: false,
-    breaks: true,
-    linkify: true,
-    typographer: true,
-  })
-    .use(markdownKatex)
-    .use(markdownHl);
-  const fence = md.renderer.rules.fence!;
-  md.renderer.rules.fence = (...args) => {
-    const [tokens, idx] = args;
-    const token = tokens[idx];
-    const rawCode = fence(...args);
+  const { md, asyncPluginLoaded } = useMarkdownIt();
+  const [decodedContent, setDecodedContent] = useState(renderContent(md));
 
-    return rawCode;
+  useEffect(() => {
+    setDecodedContent(renderContent(md));
+  }, [content, asyncPluginLoaded]);
 
-    // return `<div relative>
-    // <div data-code=${encodeURIComponent(token.content)} class="copy-btn gpt-copy-btn group">
-    //     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="currentColor" d="M28 10v18H10V10h18m0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Z" /><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z" /></svg>
-    //       <div class="group-hover:op-100 gpt-copy-tips">
-    //         Copied
-    //       </div>
-    // </div>
-    // ${rawCode}
-    // </div>`;
-  };
-
-  let decodedContent = "";
-
-  if (typeof content === "function") {
-    decodedContent = md.render(content());
-  } else if (typeof content === "string") {
-    decodedContent = md.render(content);
+  function renderContent(md: MarkdownIt) {
+    let htmlString = "";
+    if (typeof content === "function") {
+      htmlString = md.render(content());
+    } else if (typeof content === "string") {
+      htmlString = md.render(content);
+    }
+    return htmlString;
   }
 
   return (

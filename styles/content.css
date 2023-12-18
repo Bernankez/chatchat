@@ -1,9 +1,10 @@
 .content pre {
-  background-color: #7373730e;
+  background-color: #7373730e !important;
 }
 
 .dark .content pre {
-  background-color: #73737330;
+  background-color: #73737330 !important;
+  color: var(--tw-prose-pre-code) !important;
 }
 
 .content code {

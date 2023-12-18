@@ -19,12 +19,10 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "highlight.js": "^11.9.0",
     "immer": "^10.0.3",
     "katex": "^0.16.9",
     "lucide-react": "^0.294.0",
     "markdown-it": "^14.0.0",
-    "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-katex": "^2.0.3",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
@@ -47,8 +45,10 @@
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "markdown-it-shikiji": "^0.9.9",
     "postcss": "^8",
     "prettier": "^3.1.0",
+    "shikiji": "^0.9.9",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
