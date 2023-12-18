@@ -1,16 +1,18 @@
 import { useMounted } from "@/hooks/use-mounted";
 import { Skeleton } from "./skeleton";
+import { forwardRef } from "react";
+import { Slot } from "@radix-ui/react-slot";
 
 export interface PlaceholderProps {
   children?: React.ReactNode;
   skeleton?: string | React.ReactNode;
 }
 
-export default function Placeholder({ children, skeleton }: PlaceholderProps) {
+const Placeholder = forwardRef<HTMLButtonElement, PlaceholderProps>(function Placeholder({ skeleton, ...props }, ref) {
   const mounted = useMounted();
 
   if (mounted) {
-    return children;
+    return <Slot ref={ref} {...props} />;
   }
 
   if (typeof skeleton !== "string") {
@@ -18,4 +20,6 @@ export default function Placeholder({ children, skeleton }: PlaceholderProps) {
   }
 
   return <Skeleton className={skeleton}></Skeleton>;
-}
+});
+
+export default Placeholder;

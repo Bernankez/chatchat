@@ -5,8 +5,8 @@ import { useState } from "react";
 import { modelList } from "@/lib/const";
 import ModelSelect from "@/components/common/model-select";
 import ThemeToggle from "@/components/theme/theme-toggle";
-import Settings from "@/components/common/settings";
-import SettingsPanel from "@/components/common/settings-panel";
+import Settings from "@/components/settings/settings";
+import SettingsPanel from "@/components/settings/settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
 import { useBreakpoint } from "../hooks/use-breakpoint";
 import ConversationList from "@/components/conversation/conversation-list";
@@ -14,13 +14,16 @@ import { useMounted } from "@/hooks/use-mounted";
 import Placeholder from "@/components/ui/placeholder";
 import ConversationSend from "@/components/conversation/conversation-send";
 import ConversationSettings from "@/components/conversation/conversation-settings";
-import WideScreen from "@/components/theme/wide-screen";
+import WideScreen from "@/components/settings/wide-screen";
+import { useTranslation } from "react-i18next";
+import Language from "@/components/settings/language";
 
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
   const mounted = useMounted();
   const { settingsPanelOpen, setSettingsPanelOpen, wideScreenMode } = useSettingsStore();
   const { greaterOrEqual } = useBreakpoint();
+  const { t } = useTranslation("app");
 
   const asideWidth = "24rem";
   const pagePaddingRight = settingsPanelOpen && greaterOrEqual("xl") ? asideWidth : "0";
@@ -40,13 +43,16 @@ export default function Home() {
             <Settings></Settings>
             <WideScreen></WideScreen>
             <ThemeToggle></ThemeToggle>
+            <Language></Language>
           </div>
         </div>
         <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent">
           chatchat
         </div>
         <div className="flex items-center gap-3">
-          <div className="text-muted-foreground shrink-0">Based on OpenAI API</div>
+          <Placeholder skeleton="w-28 h-6">
+            <div className="text-muted-foreground shrink-0">{t("subTitle")}</div>
+          </Placeholder>
           <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
         </div>
         <div>{/* <ConversationSettings></ConversationSettings> */}</div>

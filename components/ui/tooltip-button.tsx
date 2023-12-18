@@ -27,7 +27,11 @@ const TooltipButton = forwardRef<HTMLButtonElement, TooltipButtonProps>(function
     );
   }
 
-  return <Button {...props}>{children}</Button>;
+  return (
+    <Button {...props} ref={ref}>
+      {children}
+    </Button>
+  );
 });
 
 export default TooltipButton;
