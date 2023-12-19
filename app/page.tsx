@@ -12,11 +12,12 @@ import { useBreakpoint } from "../hooks/use-breakpoint";
 import ConversationList from "@/components/conversation/conversation-list";
 import { useMounted } from "@/hooks/use-mounted";
 import Placeholder from "@/components/ui/placeholder";
-import ConversationSend from "@/components/conversation/conversation-send";
+import ConversationInputAreaSimple from "@/components/conversation/conversation-input-area-simple";
 import ConversationSettings from "@/components/conversation/conversation-settings";
 import WideScreen from "@/components/settings/wide-screen";
 import { useTranslation } from "react-i18next";
 import Language from "@/components/settings/language";
+import ConversationInputArea from "@/components/conversation/conversation-input-area";
 
 export default function Home() {
   const [model, setModel] = useState(modelList[0]);
@@ -61,7 +62,8 @@ export default function Home() {
           <ConversationList role="user"></ConversationList>
         </div>
         <div className="mt-3">
-          <ConversationSend></ConversationSend>
+          {/* <ConversationInputAreaSimple></ConversationInputAreaSimple> */}
+          <ConversationInputArea></ConversationInputArea>
         </div>
       </main>
       {/* Settings Panel */}

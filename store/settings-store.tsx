@@ -7,6 +7,8 @@ interface SettingsState {
   setSettingsPanelOpen: (open: boolean) => void;
   wideScreenMode: boolean;
   setWideScreenMode: (mode: boolean) => void;
+  swapEnter: boolean;
+  setSwapEnter: (value: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -23,6 +25,12 @@ export const useSettingsStore = create<SettingsState>()(
         setWideScreenMode: (mode) => {
           set((state) => {
             state.wideScreenMode = mode;
+          });
+        },
+        swapEnter: false,
+        setSwapEnter: (value) => {
+          set((state) => {
+            state.swapEnter = value;
           });
         },
       })),

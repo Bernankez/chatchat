@@ -1,11 +1,14 @@
 import { Icon } from "@iconify/react";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
-import { useEvent } from "react-use";
+import { useResizeObserver } from "@/hooks/use-resize-observer";
+import { ScrollArea } from "../ui/scroll-area";
+import { useMounted } from "@/hooks/use-mounted";
 
-export default function ConversationSend() {
+export default function ConversationInputAreaSimple() {
+  const mounted = useMounted();
   const { t } = useTranslation("chat");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -14,7 +17,13 @@ export default function ConversationSend() {
     el.style.height = `${el.scrollHeight}px`;
   }
 
-  useEvent("resize", () => {
+  const main = useMemo(() => {
+    if (mounted) {
+      return document.querySelector("main");
+    }
+  }, [mounted]);
+
+  useResizeObserver(main, () => {
     if (textareaRef.current) {
       adjustInput(textareaRef.current);
     }
@@ -28,14 +37,14 @@ export default function ConversationSend() {
         rows={1}
         autoComplete="false"
         placeholder={t("sendPlaceholder")}
-        className="resize-none bg-secondary focus:outline-none p-4 min-h-[3.5rem] w-full box-border rounded-md"
+        className="resize-none p-4 bg-secondary min-h-[3.5rem] max-h-[9.5rem] focus:outline-none w-full rounded-md"
         onInput={(e) => adjustInput(e.currentTarget)}></textarea>
-      <Placeholder skeleton="w-14 h-14">
+      <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("send")}>
           <Icon icon="simple-icons:ghost" width="1.5rem" color="#c14344"></Icon>
         </TooltipButton>
       </Placeholder>
-      <Placeholder skeleton="w-14 h-14">
+      <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("clear")}>
           <Icon icon="lucide:paintbrush" width="1.4rem"></Icon>
         </TooltipButton>
