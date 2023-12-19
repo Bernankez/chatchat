@@ -7,7 +7,6 @@ import { I18nProvider } from "@/lang/client";
 import "@/styles/globals.css";
 import "@/styles/content.css";
 import "katex/dist/katex.min.css";
-import "highlight.js/styles/atom-one-dark.css";
 
 const inter = Inter({
   subsets: ["latin"],
