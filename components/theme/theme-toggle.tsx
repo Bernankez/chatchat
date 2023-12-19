@@ -6,10 +6,12 @@ import { useMemo } from "react";
 import { Skeleton } from "../ui/skeleton";
 import TooltipButton from "../ui/tooltip-button";
 import { useMounted } from "@/hooks/use-mounted";
+import { useTranslation } from "react-i18next";
 
 export default function DarkToggle() {
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
+  const { t } = useTranslation("settings");
 
   const icon = useMemo(() => {
     if (theme === "dark") {
@@ -42,7 +44,7 @@ export default function DarkToggle() {
       size="icon"
       className="capitalize"
       onClick={toggleTheme}
-      tooltip={<span className="capitalize">{theme}</span>}>
+      tooltip={<span>{t(theme!)}</span>}>
       <Icon icon={icon} width="1.1rem"></Icon>
     </TooltipButton>
   );

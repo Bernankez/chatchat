@@ -46,12 +46,12 @@ export default function Home() {
             <Language></Language>
           </div>
         </div>
-        <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent">
+        <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent cursor-default">
           chatchat
         </div>
         <div className="flex items-center gap-3">
           <Placeholder skeleton="w-28 h-6">
-            <div className="text-muted-foreground shrink-0">{t("subTitle")}</div>
+            <div className="text-muted-foreground shrink-0 cursor-default">{t("subTitle")}</div>
           </Placeholder>
           <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
         </div>
