@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { FormEvent, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
