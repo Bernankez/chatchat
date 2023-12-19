@@ -2,20 +2,37 @@ import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 import { useKeys } from "@/hooks/use-keys";
 import TooltipButton from "../ui/tooltip-button";
-import { cloneElement } from "react";
+import { cloneElement, useMemo } from "react";
 import { useMounted } from "@/hooks/use-mounted";
 import Placeholder from "../ui/placeholder";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { useTheme } from "next-themes";
 
 export default function ConversationInputArea() {
   const mounted = useMounted();
-  const { t } = useTranslation("chat");
+  const { t, i18n } = useTranslation("chat");
+  const lng = i18n.resolvedLanguage;
   const { send, warp } = useKeys();
+  const { resolvedTheme } = useTheme();
 
   const shiftIcon = <Icon icon="lucide:arrow-big-up"></Icon>;
   const enterIcon = <Icon icon="lucide:corner-down-left"></Icon>;
+
+  const locale = useMemo(() => {
+    switch (lng) {
+      case "en": {
+        return "en";
+      }
+      case "zh-CN": {
+        return "zh";
+      }
+      default: {
+        return lng;
+      }
+    }
+  }, [lng]);
 
   function getIcon(key: string) {
     if (!mounted) {
@@ -48,7 +65,12 @@ export default function ConversationInputArea() {
             </Placeholder>
           </PopoverTrigger>
           <PopoverContent className="w-full border-0 p-0">
-            <Picker data={data}></Picker>
+            <Picker
+              data={data}
+              theme={resolvedTheme}
+              locale={locale}
+              skinTonePosition="search"
+              onEmojiSelect={console.log}></Picker>
           </PopoverContent>
         </Popover>
         2000/1222
@@ -64,7 +86,7 @@ export default function ConversationInputArea() {
           {t("warp")}
         </div>
         <TooltipButton size="icon" tooltip={t("send")}>
-          <Icon icon="simple-icons:ghost" width="1.1rem"></Icon>
+          <Icon icon="simple-icons:ghost" width="1.1rem" color="#c14344"></Icon>
         </TooltipButton>
       </div>
     </div>
