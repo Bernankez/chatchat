@@ -1,9 +1,9 @@
 .content pre {
-  background-color: #7373730e !important;
+  background-color: var(--content) !important;
 }
 
 .dark .content pre {
-  background-color: #73737330 !important;
+  background-color: var(--content) !important;
   color: var(--tw-prose-pre-code) !important;
 }
 
@@ -12,14 +12,14 @@
 }
 
 .content :not(pre) code {
-  background-color: #7373730e;
+  background-color: var(--content);
   padding: .15rem .5rem;
   margin: 0 .25rem;
   border-radius: .5rem;
 }
 
 .dark .content :not(pre) code {
-  background-color: #73737330;
+  background-color: var(--content);
 }
 
 .content code::before,
@@ -33,7 +33,7 @@
 }
 
 .content table thead tr {
-  background-color: #73737330;
+  background-color: var(--content);
   text-align: left;
 }
 
