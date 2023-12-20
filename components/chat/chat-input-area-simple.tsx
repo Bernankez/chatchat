@@ -4,10 +4,14 @@ import { useTranslation } from "react-i18next";
 import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
 import { useResizeObserver } from "@/hooks/use-resize-observer";
-import { ScrollArea } from "../ui/scroll-area";
 import { useMounted } from "@/hooks/use-mounted";
 
-export default function ConversationInputAreaSimple() {
+export interface ChatInputAreaSimpleProps {
+  value: string;
+  onInput: (text: string) => void;
+}
+
+export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   const mounted = useMounted();
   const { t } = useTranslation("chat");
   const textareaRef = useRef<HTMLTextAreaElement>(null);

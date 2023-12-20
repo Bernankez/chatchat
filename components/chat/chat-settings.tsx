@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 
-export default function ConversationSettings() {
+export default function ChatSettings() {
   const [editing, setEditing] = useState(false);
 
   return (

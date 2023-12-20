@@ -3,12 +3,12 @@ import { Icon } from "@iconify/react";
 import DecodeContent from "../common/decode-content";
 import Placeholder from "../ui/placeholder";
 
-export interface ConversationListProps {
+export interface ChatListProps {
   className?: string;
   role?: Role;
 }
 
-export default function ConversationList({ role = "assistant", className }: ConversationListProps) {
+export default function ChatList({ role = "assistant", className }: ChatListProps) {
   const response = `
 当然可以。以下是一段示例的Markdown内容，你可以用来测试\`markdown-it\`解析器：
 
