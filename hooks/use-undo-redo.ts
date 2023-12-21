@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useKeyCombo } from "./use-key-combo";
 
 export interface UseUndoRedoOptions<E extends HTMLElement> {
@@ -16,7 +16,7 @@ export function useUndoRedo<E extends HTMLElement>(options?: UseUndoRedoOptions<
   // Update current elRef
   elRef.current = el;
 
-  isUndoRef.current = useKeyCombo("Meta + z", {
+  const u = useKeyCombo("Meta + z", {
     preventDefault: true,
     filter: () => {
       if (elRef.current) {
@@ -34,8 +34,9 @@ export function useUndoRedo<E extends HTMLElement>(options?: UseUndoRedoOptions<
       }
     },
   });
+  isUndoRef.current = u.isPressed;
 
-  isRedoRef.current = useKeyCombo("Shift + Meta + z", {
+  const r = useKeyCombo("Shift + Meta + z", {
     preventDefault: true,
     filter: () => {
       if (elRef.current) {
@@ -48,6 +49,7 @@ export function useUndoRedo<E extends HTMLElement>(options?: UseUndoRedoOptions<
       }
     },
   });
+  isRedoRef.current = r.isPressed;
 
   return {
     // If both redo and undo are true, it is considered a redo

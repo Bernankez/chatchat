@@ -7,6 +7,7 @@ import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { useMounted } from "@/hooks/use-mounted";
 import { useInputState } from "@/hooks/use-input-state";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
+import useSendWarp from "@/hooks/use-send-warp";
 
 export interface ChatInputAreaSimpleProps {
   value: string;
@@ -25,6 +26,15 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
     },
     undo: () => {
       console.log("undo");
+    },
+  });
+  useSendWarp({
+    el: textareaRef.current,
+    send: () => {
+      console.log("send");
+    },
+    warp: () => {
+      console.log("warp");
     },
   });
 

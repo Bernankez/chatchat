@@ -11,8 +11,8 @@ import Picker from "@emoji-mart/react";
 import { useTheme } from "next-themes";
 import { useClickAway } from "react-use";
 import { useInputState } from "@/hooks/use-input-state";
-import { KeystrokesProvider } from "@rwh/react-keystrokes";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
+import useSendWarp from "@/hooks/use-send-warp";
 
 export interface ChatInputAreaProps {
   value: string;
@@ -36,6 +36,15 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
     },
     undo: () => {
       console.log("undo");
+    },
+  });
+  useSendWarp({
+    el: textareaRef.current,
+    send: () => {
+      console.log("send");
+    },
+    warp: () => {
+      console.log("warp");
     },
   });
 
