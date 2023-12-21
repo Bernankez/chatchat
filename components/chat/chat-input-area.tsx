@@ -10,6 +10,9 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useTheme } from "next-themes";
 import { useClickAway } from "react-use";
+import { useInputState } from "@/hooks/use-input-state";
+import { KeystrokesProvider } from "@rwh/react-keystrokes";
+import { useUndoRedo } from "@/hooks/use-undo-redo";
 
 export interface ChatInputAreaProps {
   value: string;
@@ -25,6 +28,16 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const { send, warp } = useKeys();
   const { resolvedTheme } = useTheme();
   const [clickOutside, setClickOutside] = useState(false);
+  const textareaProps = useInputState(props.value, props.onInput);
+  useUndoRedo({
+    el: textareaRef.current,
+    redo: () => {
+      console.log("redo");
+    },
+    undo: () => {
+      console.log("undo");
+    },
+  });
 
   useClickAway(textareaRef, (e) => {
     if (e.target !== document.querySelector("em-emoji-picker") && !emojiButtonRef.current?.contains(e.target as Node)) {
@@ -66,10 +79,6 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         }
       }
     });
-  }
-
-  function onFocus() {
-    setClickOutside(false);
   }
 
   // TODO handle composition within onInput
@@ -124,9 +133,14 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       <textarea
         ref={textareaRef}
         rows={6}
+        autoFocus
         className="resize-none bg-transparent px-6 focus:outline-none w-full"
         placeholder={t("sendPlaceholder")}
-        onFocus={onFocus}></textarea>
+        onFocus={() => {
+          setClickOutside(false);
+        }}
+        {...textareaProps}></textarea>
+
       <div className="px-6 flex items-center gap-3 justify-end">
         <div className="flex items-center text-sm text-muted-foreground cursor-default select-none">
           {getIcon(send)}

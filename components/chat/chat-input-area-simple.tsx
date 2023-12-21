@@ -5,6 +5,8 @@ import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
 import { useResizeObserver } from "@/hooks/use-resize-observer";
 import { useMounted } from "@/hooks/use-mounted";
+import { useInputState } from "@/hooks/use-input-state";
+import { useUndoRedo } from "@/hooks/use-undo-redo";
 
 export interface ChatInputAreaSimpleProps {
   value: string;
@@ -15,6 +17,16 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   const mounted = useMounted();
   const { t } = useTranslation("chat");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { onInput, ...textareaProps } = useInputState(props.value, props.onInput);
+  useUndoRedo({
+    el: textareaRef.current,
+    redo: () => {
+      console.log("redo");
+    },
+    undo: () => {
+      console.log("undo");
+    },
+  });
 
   function adjustInput(el: HTMLTextAreaElement) {
     el.style.height = "auto";
@@ -42,7 +54,11 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
         autoComplete="false"
         placeholder={t("sendPlaceholder")}
         className="resize-none p-4 bg-secondary min-h-[3.5rem] max-h-[9.5rem] focus:outline-none w-full rounded-md"
-        onInput={(e) => adjustInput(e.currentTarget)}></textarea>
+        onInput={(e) => {
+          adjustInput(e.currentTarget);
+          onInput(e);
+        }}
+        {...textareaProps}></textarea>
       <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("send")}>
           <Icon icon="simple-icons:ghost" width="1.5rem" color="#c14344"></Icon>
