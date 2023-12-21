@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useMemo, useRef } from "react";
+import { useContext, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
@@ -8,6 +8,7 @@ import { useMounted } from "@/hooks/use-mounted";
 import { useInputState } from "@/hooks/use-input-state";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 import useSendWarp from "@/hooks/use-send-warp";
+import { ChatInputAreaContext } from "@/app/components/Footer";
 
 export interface ChatInputAreaSimpleProps {
   value: string;
@@ -18,14 +19,17 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   const mounted = useMounted();
   const { t } = useTranslation("chat");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { back, forward } = useContext(ChatInputAreaContext);
   const { onInput, ...textareaProps } = useInputState(props.value, props.onInput);
   useUndoRedo({
     el: textareaRef.current,
     redo: () => {
       console.log("redo");
+      forward();
     },
     undo: () => {
       console.log("undo");
+      back();
     },
   });
   useSendWarp({
