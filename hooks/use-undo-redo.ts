@@ -7,6 +7,7 @@ export interface UseUndoRedoOptions<E extends HTMLElement> {
   redo?: () => void;
 }
 
+// TODO listen ctrl/meta validate macOS or Windows
 export function useUndoRedo<E extends HTMLElement>(options?: UseUndoRedoOptions<E>) {
   const { undo, redo, el } = options || {};
   const isUndoRef = useRef(false);
