@@ -1,24 +1,22 @@
 import ChatInputAreaSimple from "@/components/chat/chat-input-area-simple";
 import ChatInputArea from "@/components/chat/chat-input-area";
-import { createContext, useState } from "react";
-import { useStateHistory } from "@/hooks/use-state-history";
+import { createContext } from "react";
+import { useHistoryTravel } from "ahooks";
 
 export const ChatInputAreaContext = createContext({
-  back: (amount?: number) => {},
-  forward: (amount?: number) => {},
+  back: () => {},
+  forward: () => {},
 });
 
 export default function Footer() {
-  const [state, setState, { undo, redo, history, index }] = useStateHistory<string>();
+  const { value, setValue, back, forward } = useHistoryTravel<string>();
 
-  // console.log(state, history, index);
-
-  // console.trace(state, history);
+  const state = value || "";
 
   return (
-    <ChatInputAreaContext.Provider value={{ back: undo, forward: redo }}>
-      <ChatInputAreaSimple value={state} onInput={setState}></ChatInputAreaSimple>
-      <ChatInputArea value={state} onInput={setState}></ChatInputArea>
+    <ChatInputAreaContext.Provider value={{ back, forward }}>
+      <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
+      <ChatInputArea value={state} onInput={setValue}></ChatInputArea>
     </ChatInputAreaContext.Provider>
   );
 }

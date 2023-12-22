@@ -24,11 +24,9 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   useUndoRedo({
     el: textareaRef.current,
     redo: () => {
-      console.log("redo");
       forward();
     },
     undo: () => {
-      console.log("undo");
       back();
     },
   });

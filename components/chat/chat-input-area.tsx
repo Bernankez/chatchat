@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 import { useKeys } from "@/hooks/use-keys";
 import TooltipButton from "../ui/tooltip-button";
-import { cloneElement, useMemo, useRef, useState } from "react";
+import { cloneElement, useContext, useMemo, useRef, useState } from "react";
 import { useMounted } from "@/hooks/use-mounted";
 import Placeholder from "../ui/placeholder";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -13,6 +13,7 @@ import { useClickAway } from "ahooks";
 import { useInputState } from "@/hooks/use-input-state";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 import useSendWarp from "@/hooks/use-send-warp";
+import { ChatInputAreaContext } from "@/app/components/Footer";
 
 export interface ChatInputAreaProps {
   value: string;
@@ -28,14 +29,15 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const { send, warp } = useKeys();
   const { resolvedTheme } = useTheme();
   const [clickOutside, setClickOutside] = useState(false);
+  const { back, forward } = useContext(ChatInputAreaContext);
   const textareaProps = useInputState(props.value, props.onInput);
   useUndoRedo({
     el: textareaRef.current,
     redo: () => {
-      console.log("redo");
+      forward();
     },
     undo: () => {
-      console.log("undo");
+      back();
     },
   });
   useSendWarp({
