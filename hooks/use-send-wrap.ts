@@ -2,16 +2,16 @@ import { useRef } from "react";
 import { useKeyCombo } from "./use-key-combo";
 import { ENTER, SHIFT_ENTER, useKeys } from "./use-keys";
 
-export interface UseSendWarp<E extends HTMLElement> {
+export interface UseSendWrap<E extends HTMLElement> {
   el?: E | null;
   send?: () => void;
-  warp?: () => void;
+  wrap?: () => void;
 }
 
-export default function useSendWarp<E extends HTMLElement>(options?: UseSendWarp<E>) {
-  const { el, send, warp } = options || {};
+export default function useSendWrap<E extends HTMLElement>(options?: UseSendWrap<E>) {
+  const { el, send, wrap } = options || {};
   const isSendRef = useRef(false);
-  const isWarpRef = useRef(false);
+  const isWrapRef = useRef(false);
   const { send: sendKey } = useKeys();
   const elRef = useRef(el);
 
@@ -30,7 +30,7 @@ export default function useSendWarp<E extends HTMLElement>(options?: UseSendWarp
         if (sendKey === SHIFT_ENTER) {
           send?.();
         } else {
-          warp?.();
+          wrap?.();
         }
       }
     },
@@ -48,7 +48,7 @@ export default function useSendWarp<E extends HTMLElement>(options?: UseSendWarp
         if (sendKey === ENTER) {
           send?.();
         } else {
-          warp?.();
+          wrap?.();
         }
       }
     },
@@ -56,15 +56,15 @@ export default function useSendWarp<E extends HTMLElement>(options?: UseSendWarp
 
   if (sendKey === SHIFT_ENTER) {
     isSendRef.current = se.isPressed;
-    isWarpRef.current = e.isPressed;
+    isWrapRef.current = e.isPressed;
   } else {
     isSendRef.current = e.isPressed;
-    isWarpRef.current = se.isPressed;
+    isWrapRef.current = se.isPressed;
   }
 
   return {
     isSend: isSendRef.current,
-    isWarp: isWarpRef.current,
+    isWrap: isWrapRef.current,
     isEnter: e.isPressed,
     isShiftEnter: se.isPressed,
   };

@@ -8,10 +8,10 @@ export function useKeys() {
   const { swapEnter } = useSettingsStore();
 
   const send = useMemo(() => (swapEnter ? SHIFT_ENTER : ENTER), [swapEnter]);
-  const warp = useMemo(() => (swapEnter ? ENTER : SHIFT_ENTER), [swapEnter]);
+  const wrap = useMemo(() => (swapEnter ? ENTER : SHIFT_ENTER), [swapEnter]);
 
   return {
     send,
-    warp,
+    wrap,
   };
 }

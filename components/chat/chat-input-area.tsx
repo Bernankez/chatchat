@@ -12,7 +12,7 @@ import { useTheme } from "next-themes";
 import { useClickAway } from "ahooks";
 import { useInputState } from "@/hooks/use-input-state";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
-import useSendWarp from "@/hooks/use-send-warp";
+import useSendWrap from "@/hooks/use-send-wrap";
 import { ChatInputAreaContext } from "@/app/components/Footer";
 
 export interface ChatInputAreaProps {
@@ -26,7 +26,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const mounted = useMounted();
   const { t, i18n } = useTranslation("chat");
   const lng = i18n.resolvedLanguage;
-  const { send, warp } = useKeys();
+  const { send, wrap } = useKeys();
   const { resolvedTheme } = useTheme();
   const [clickOutside, setClickOutside] = useState(false);
   const { back, forward } = useContext(ChatInputAreaContext);
@@ -40,13 +40,13 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       back();
     },
   });
-  useSendWarp({
+  useSendWrap({
     el: textareaRef.current,
     send: () => {
       console.log("send");
     },
-    warp: () => {
-      console.log("warp");
+    wrap: () => {
+      console.log("wrap");
     },
   });
 
@@ -155,8 +155,8 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       <div className="px-6 flex items-center gap-3 justify-end">
         <div className="flex items-center text-sm text-muted-foreground cursor-default select-none">
           {getIcon(send)}
-          {t("send")} / {getIcon(warp)}
-          {t("warp")}
+          {t("send")} / {getIcon(wrap)}
+          {t("wrap")}
         </div>
         <TooltipButton variant="secondary" size="icon" tooltip={t("send")}>
           <Icon icon="simple-icons:ghost" width="1.4rem" color="#c14344"></Icon>
