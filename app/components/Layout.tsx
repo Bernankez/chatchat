@@ -1,7 +1,7 @@
 "use client";
 
 import { useSettingsStore } from "@/store/settings-store";
-import { useBreakpoint } from "@/hooks/use-breakpoint";
+import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import { useMounted } from "@/hooks/use-mounted";
 import { asideWidth } from "./Aside";
 
@@ -12,11 +12,11 @@ export interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const mounted = useMounted();
   const { settingsPanelOpen, wideScreenMode } = useSettingsStore();
-  const { greaterOrEqual } = useBreakpoint();
+  const { greaterOrEqual } = useBreakpoint(breakpointsTailwind);
 
   const [Header, Chat, Footer, Aside] = children;
 
-  const pagePaddingRight = settingsPanelOpen && greaterOrEqual("xl") ? asideWidth : "0";
+  const pagePaddingRight = settingsPanelOpen && greaterOrEqual("lg") ? asideWidth : "0";
 
   return (
     <div className="flex ease-in-out duration-500 transition-[padding]" style={{ paddingRight: pagePaddingRight }}>

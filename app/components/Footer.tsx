@@ -1,7 +1,7 @@
 import ChatInputAreaSimple from "@/components/chat/chat-input-area-simple";
 import ChatInputArea from "@/components/chat/chat-input-area";
-import { useStateWithHistory } from "react-use";
-import { createContext, useEffect } from "react";
+import { createContext, useState } from "react";
+import { useStateHistory } from "@/hooks/use-state-history";
 
 export const ChatInputAreaContext = createContext({
   back: (amount?: number) => {},
@@ -9,14 +9,14 @@ export const ChatInputAreaContext = createContext({
 });
 
 export default function Footer() {
-  const [state, setState, stateHistory] = useStateWithHistory("", 100, []);
+  const [state, setState, { undo, redo, history, index }] = useStateHistory<string>();
 
-  const { back, forward, history } = stateHistory;
+  // console.log(state, history, index);
 
-  console.trace(state, history);
+  // console.trace(state, history);
 
   return (
-    <ChatInputAreaContext.Provider value={{ back, forward }}>
+    <ChatInputAreaContext.Provider value={{ back: undo, forward: redo }}>
       <ChatInputAreaSimple value={state} onInput={setState}></ChatInputAreaSimple>
       <ChatInputArea value={state} onInput={setState}></ChatInputArea>
     </ChatInputAreaContext.Provider>

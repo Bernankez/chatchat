@@ -1,40 +1,78 @@
-import { createBreakpoint } from "react-use";
+import { isDefined } from "@/lib/is";
+import { increaseWithUnit } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { useMounted } from "./use-mounted";
 
-const originUseBreakpoint = createBreakpoint({
-  "sm": 0,
-  "md": 640,
-  "lg": 768,
-  "xl": 1024,
-  "2xl": 1280,
-});
+export const breakpointsTailwind = {
+  "sm": 640,
+  "md": 768,
+  "lg": 1024,
+  "xl": 1280,
+  "2xl": 1536,
+};
 
-const breakpointSort = ["sm", "md", "lg", "xl", "2xl"] as const;
-export type Breakpoint = (typeof breakpointSort)[number];
+export type Breakpoints<K extends string = string> = Record<K, number | string>;
 
-export function useBreakpoint() {
-  const bp = originUseBreakpoint() as Breakpoint;
+export function useBreakpoint<K extends string>(breakpoints: Breakpoints<K>) {
+  const [width, setWidth] = useState(0);
+  const mounted = useMounted();
 
-  function greaterOrEqual(breakpoint: Breakpoint) {
-    return breakpointSort.indexOf(breakpoint) <= breakpointSort.indexOf(bp);
+  function handler() {
+    requestAnimationFrame(() => {
+      setWidth(window.innerWidth);
+    });
   }
 
-  function greater(breakpoint: Breakpoint) {
-    return breakpointSort.indexOf(breakpoint) < breakpointSort.indexOf(bp);
+  useEffect(() => {
+    if (mounted) {
+      window.addEventListener("resize", handler);
+    }
+    () => {
+      if (mounted) {
+        window.removeEventListener("resize", handler);
+      }
+    };
+  }, [mounted]);
+
+  function getValue(k: K, delta?: number) {
+    let v = breakpoints[k];
+    if (isDefined(delta)) {
+      v = increaseWithUnit(v, delta);
+    }
+    if (typeof v === "number") {
+      v = `${v}px`;
+    }
+    return v;
   }
 
-  function smallerOrEqual(breakpoint: Breakpoint) {
-    return breakpointSort.indexOf(breakpoint) >= breakpointSort.indexOf(bp);
+  function match(query: string) {
+    if (!mounted) {
+      return false;
+    }
+    return window.matchMedia(query).matches;
   }
 
-  function smaller(breakpoint: Breakpoint) {
-    return breakpointSort.indexOf(breakpoint) > breakpointSort.indexOf(bp);
+  function greaterOrEqual(k: K) {
+    return match(`(min-width: ${getValue(k)})`);
+  }
+
+  function greater(k: K) {
+    return match(`(min-width: ${getValue(k, 0.1)})`);
+  }
+
+  function smallerOrEqual(k: K) {
+    return match(`(max-width: ${getValue(k)})`);
+  }
+
+  function smaller(k: K) {
+    return match(`(max-width: ${getValue(k, -0.1)})`);
   }
 
   return {
-    breakpoint: bp,
-    greater,
+    width,
     greaterOrEqual,
-    smaller,
+    greater,
     smallerOrEqual,
+    smaller,
   };
 }

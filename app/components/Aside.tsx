@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import SettingsPanel from "@/components/settings/settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
-import { useBreakpoint } from "@/hooks/use-breakpoint";
+import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import { useMounted } from "@/hooks/use-mounted";
 
 export const asideWidth = "24rem";
@@ -9,11 +9,11 @@ export const asideWidth = "24rem";
 export default function Aside() {
   const mounted = useMounted();
   const { settingsPanelOpen, setSettingsPanelOpen } = useSettingsStore();
-  const { greaterOrEqual } = useBreakpoint();
+  const { greaterOrEqual } = useBreakpoint(breakpointsTailwind);
 
   return (
     mounted &&
-    greaterOrEqual("xl") && (
+    greaterOrEqual("lg") && (
       <aside
         style={{ width: asideWidth }}
         className={`bg-background fixed right-0 top-0 bottom-0 shrink-0 transition-[max-width] duration-500 ease-in-out ${

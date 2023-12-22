@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useTheme } from "next-themes";
-import { useClickAway } from "react-use";
+import { useClickAway } from "ahooks";
 import { useInputState } from "@/hooks/use-input-state";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 import useSendWarp from "@/hooks/use-send-warp";
@@ -48,11 +48,11 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
     },
   });
 
-  useClickAway(textareaRef, (e) => {
+  useClickAway((e) => {
     if (e.target !== document.querySelector("em-emoji-picker") && !emojiButtonRef.current?.contains(e.target as Node)) {
       setClickOutside(true);
     }
-  });
+  }, textareaRef);
 
   const shiftIcon = <Icon icon="lucide:arrow-big-up"></Icon>;
   const enterIcon = <Icon icon="lucide:corner-down-left"></Icon>;

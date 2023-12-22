@@ -3,14 +3,14 @@ import { Icon } from "@iconify/react";
 import TooltipButton from "../ui/tooltip-button";
 import SettingsPanel from "./settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
-import { useBreakpoint } from "@/hooks/use-breakpoint";
+import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import Placeholder from "../ui/placeholder";
 import { Toggle } from "../ui/toggle";
 import { useTranslation } from "react-i18next";
 
 export default function Settings() {
   const { setSettingsPanelOpen, settingsPanelOpen } = useSettingsStore();
-  const { smaller } = useBreakpoint();
+  const { smaller } = useBreakpoint(breakpointsTailwind);
   const { t } = useTranslation("settings");
 
   return (
@@ -23,7 +23,7 @@ export default function Settings() {
             </TooltipButton>
           </SheetTrigger>
         </Toggle>
-        {smaller("xl") && (
+        {smaller("lg") && (
           <SheetContent className="w-screen">
             <SettingsPanel></SettingsPanel>
           </SheetContent>
