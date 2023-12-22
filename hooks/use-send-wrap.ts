@@ -8,6 +8,9 @@ export interface UseSendWrap<E extends HTMLElement> {
   wrap?: () => void;
 }
 
+// TODO refactor return {onKeyDown}
+// It's hard to handle scroll when enter shift+enter
+// So use native enter event
 export default function useSendWrap<E extends HTMLElement>(options?: UseSendWrap<E>) {
   const { el, send, wrap } = options || {};
   const isSendRef = useRef(false);
