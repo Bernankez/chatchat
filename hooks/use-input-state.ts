@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 
-type InputEl = HTMLInputElement | HTMLTextAreaElement;
+export type InputEl = HTMLInputElement | HTMLTextAreaElement;
 
 export function useInputState(state: string, setState: (text: string) => void) {
   const [text, setText] = useState(state);
