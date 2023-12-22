@@ -1,74 +1,39 @@
-import { useRef } from "react";
-import { useKeyCombo } from "./use-key-combo";
+import { KeyboardEvent } from "react";
+import { InputEl } from "./use-input-state";
 import { ENTER, SHIFT_ENTER, useKeys } from "./use-keys";
 
-export interface UseSendWrap<E extends HTMLElement> {
-  el?: E | null;
+export interface UseSendWrap {
   send?: () => void;
   wrap?: () => void;
 }
 
-// TODO refactor return {onKeyDown}
 // It's hard to handle scroll when enter shift+enter
 // So use native enter event
-export default function useSendWrap<E extends HTMLElement>(options?: UseSendWrap<E>) {
-  const { el, send, wrap } = options || {};
-  const isSendRef = useRef(false);
-  const isWrapRef = useRef(false);
-  const { send: sendKey } = useKeys();
-  const elRef = useRef(el);
+export default function useSendWrap(options?: UseSendWrap) {
+  const { send, wrap } = options || {};
+  const { send: sendKey, wrap: wrapKey } = useKeys();
 
-  // Update current elRef
-  elRef.current = el;
-
-  const se = useKeyCombo("Shift > Enter", {
-    preventDefault: true,
-    filter: () => {
-      if (elRef.current) {
-        return document.activeElement === elRef.current;
+  function onKeyDown(e: KeyboardEvent<InputEl>) {
+    if (e.key === "Enter" && e.shiftKey) {
+      // shift_enter
+      if (sendKey === SHIFT_ENTER) {
+        e.preventDefault();
+        send?.();
+      } else if (wrapKey === SHIFT_ENTER) {
+        wrap?.();
       }
-    },
-    onPressedWithRepeat(isPressed) {
-      if (isPressed) {
-        if (sendKey === SHIFT_ENTER) {
-          send?.();
-        } else {
-          wrap?.();
-        }
+    } else if (e.key === "Enter") {
+      // enter
+      if (sendKey === ENTER) {
+        e.preventDefault();
+        send?.();
+      } else if (wrapKey === ENTER) {
+        wrap?.();
       }
-    },
-  });
-
-  const e = useKeyCombo("Enter", {
-    preventDefault: true,
-    filter: () => {
-      if (elRef.current) {
-        return document.activeElement === elRef.current;
-      }
-    },
-    onPressedWithRepeat(isPressed) {
-      if (isPressed) {
-        if (sendKey === ENTER) {
-          send?.();
-        } else {
-          wrap?.();
-        }
-      }
-    },
-  });
-
-  if (sendKey === SHIFT_ENTER) {
-    isSendRef.current = se.isPressed;
-    isWrapRef.current = e.isPressed;
-  } else {
-    isSendRef.current = e.isPressed;
-    isWrapRef.current = se.isPressed;
+    }
   }
 
   return {
-    isSend: isSendRef.current,
-    isWrap: isWrapRef.current,
-    isEnter: e.isPressed,
-    isShiftEnter: se.isPressed,
+    onKeyDown,
   };
 }

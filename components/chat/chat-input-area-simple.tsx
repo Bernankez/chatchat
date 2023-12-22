@@ -30,8 +30,7 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
       back();
     },
   });
-  useSendWrap({
-    el: textareaRef.current,
+  const { onKeyDown } = useSendWrap({
     send: () => {
       console.log("send");
     },
@@ -41,6 +40,7 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   });
 
   function adjustInput(el: HTMLTextAreaElement) {
+    // TODO adjust Input when setState
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   }
@@ -65,11 +65,12 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
         rows={1}
         autoComplete="false"
         placeholder={t("sendPlaceholder")}
-        className="resize-none p-4 bg-secondary min-h-[3.5rem] max-h-[9.5rem] focus:outline-none w-full rounded-md"
+        className="resize-none py-4 px-6 bg-secondary min-h-[3.5rem] max-h-[9.5rem] focus:outline-none w-full rounded-md"
         onInput={(e) => {
           adjustInput(e.currentTarget);
           onInput(e);
         }}
+        onKeyDown={onKeyDown}
         {...textareaProps}></textarea>
       <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("send")}>

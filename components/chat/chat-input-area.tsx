@@ -40,8 +40,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       back();
     },
   });
-  useSendWrap({
-    el: textareaRef.current,
+  const { onKeyDown } = useSendWrap({
     send: () => {
       console.log("send");
     },
@@ -91,10 +90,6 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       }
     });
   }
-
-  // TODO handle composition within onInput
-  // TODO handle useStateWithHistory
-  // TODO intercept ctrl+z
 
   function insertEmoji(emoji: string) {
     if (!clickOutside) {
@@ -150,6 +145,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         onFocus={() => {
           setClickOutside(false);
         }}
+        onKeyDown={onKeyDown}
         {...textareaProps}></textarea>
 
       <div className="px-6 flex items-center gap-3 justify-end">
