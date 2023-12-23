@@ -7,7 +7,6 @@ import Settings from "@/components/settings/settings";
 import Placeholder from "@/components/ui/placeholder";
 import ChatSettings from "@/components/chat/chat-settings";
 import WideScreen from "@/components/settings/wide-screen";
-import Language from "@/components/settings/language";
 import { useTranslation } from "react-i18next";
 
 export default function Header() {
@@ -24,7 +23,6 @@ export default function Header() {
           <Settings></Settings>
           <WideScreen></WideScreen>
           <ThemeToggle></ThemeToggle>
-          <Language></Language>
         </div>
       </div>
       <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent cursor-default">

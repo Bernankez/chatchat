@@ -9,6 +9,9 @@ interface SettingsState {
   setWideScreenMode: (mode: boolean) => void;
   swapEnter: boolean;
   setSwapEnter: (value: boolean) => void;
+  useSimpleInput: boolean;
+  setUseSimpleInput: (value: boolean) => void;
+  reset: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -31,6 +34,18 @@ export const useSettingsStore = create<SettingsState>()(
         setSwapEnter: (value) => {
           set((state) => {
             state.swapEnter = value;
+          });
+        },
+        useSimpleInput: true,
+        setUseSimpleInput: (value) => {
+          set((state) => {
+            state.useSimpleInput = value;
+          });
+        },
+        reset: () => {
+          set((state) => {
+            state.swapEnter = false;
+            state.useSimpleInput = true;
           });
         },
       })),

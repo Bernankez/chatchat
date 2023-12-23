@@ -5,6 +5,10 @@
   "dark": "Dark",
   "light": "Light",
   "panel":{
-    "interfaceSettings": "Interface Settings"
+    "interfaceSettings": "Interface Settings",
+    "openAISettings": "OpenAI Settings",
+    "swapSendWrap": "Swap send and wrap keys",
+    "useSimpleInput": "Use simple input",
+    "resetInterfaceSettings": "Reset Interface Settings"
   }
 }
