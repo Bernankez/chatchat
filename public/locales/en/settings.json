@@ -3,5 +3,8 @@
   "wideScreenMode": "Wide Screen Mode",
   "system": "System",
   "dark": "Dark",
-  "light": "Light"
+  "light": "Light",
+  "panel":{
+    "interfaceSettings": "Interface Settings"
+  }
 }

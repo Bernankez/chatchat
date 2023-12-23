@@ -3,5 +3,8 @@
   "wideScreenMode": "宽屏模式",
   "system": "跟随系统",
   "dark": "暗色",
-  "light": "亮色"
+  "light": "亮色",
+  "panel":{
+    "interfaceSettings": "界面设置"
+  }
 }
