@@ -7,6 +7,7 @@ import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import Placeholder from "../ui/placeholder";
 import { Toggle } from "../ui/toggle";
 import { useTranslation } from "react-i18next";
+import { InputEl } from "@/hooks/use-input-state";
 
 export default function Settings() {
   const { setSettingsPanelOpen, settingsPanelOpen } = useSettingsStore();
@@ -24,7 +25,14 @@ export default function Settings() {
           </SheetTrigger>
         </Toggle>
         {smaller("lg") && (
-          <SheetContent className="w-screen">
+          <SheetContent
+            className="w-screen"
+            onInteractOutside={(e) => {
+              // Do not close sheet when toggle `Simple Input` settings
+              if (e.type.includes("focusOutside") && ["textarea", "input"].includes((e.target as InputEl).type)) {
+                e.preventDefault();
+              }
+            }}>
             <SettingsPanel></SettingsPanel>
           </SheetContent>
         )}
