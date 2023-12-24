@@ -9,7 +9,7 @@ export default function Reset() {
 
   return (
     <TooltipButton variant="outline" size="icon" tooltip={t("panel.resetInterfaceSettings")} onClick={reset}>
-      <Icon icon="lucide:history" width="1.1rem"></Icon>
+      <Icon icon="lucide:rotate-cw" width="1.1rem"></Icon>
     </TooltipButton>
   );
 }
