@@ -4,6 +4,7 @@ import { useSettingsStore } from "@/store/settings-store";
 import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import { useMounted } from "@/hooks/use-mounted";
 import { asideWidth } from "./Aside";
+import FloatingButtons from "@/components/settings/floating-buttons";
 
 export interface LayoutProps {
   children: JSX.Element[];
@@ -28,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
         {Header}
         <div className="mt-3">{Chat}</div>
         <div className="mt-3">{Footer}</div>
+        <FloatingButtons></FloatingButtons>
       </main>
       {/* Settings Panel */}
       {Aside}

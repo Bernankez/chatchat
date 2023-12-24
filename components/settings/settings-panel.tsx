@@ -14,6 +14,7 @@ export interface SettingsPanelProps {
   onClose?: () => void;
 }
 
+// TODO fix column direction
 export default function SettingsPanel(props: SettingsPanelProps) {
   const { onClose, className, style } = props;
   const { t } = useTranslation("settings");

@@ -17,7 +17,7 @@ export default function Settings() {
   return (
     <Placeholder skeleton="w-10 h-10">
       <Sheet modal={false} open={settingsPanelOpen} onOpenChange={setSettingsPanelOpen}>
-        <Toggle asChild pressed={settingsPanelOpen} onPressedChange={setSettingsPanelOpen}>
+        <Toggle asChild pressed={settingsPanelOpen}>
           <SheetTrigger asChild>
             <TooltipButton variant="outline" size="icon" tooltip={t("settings")}>
               <Icon icon="lucide:settings" width="1.1rem"></Icon>
@@ -28,6 +28,7 @@ export default function Settings() {
           <SheetContent
             className="w-screen"
             onInteractOutside={(e) => {
+              // TODO ignore elements with [data-ignore-xxx]
               // Do not close sheet when toggle `Simple Input` settings
               if (e.type.includes("focusOutside") && ["textarea", "input"].includes((e.target as InputEl).type)) {
                 e.preventDefault();
