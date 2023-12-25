@@ -2,24 +2,24 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-interface ChatState {
-  prompt: string;
-  setPrompt: (prompt: string) => void;
+interface AppState {
+  password: string;
+  setPassword: (password: string) => void;
 }
 
-export const useChatStore = create<ChatState>()(
+export const useAppStore = create<AppState>()(
   devtools(
     persist(
       immer((set) => ({
-        prompt: "",
-        setPrompt: (prompt) => {
+        password: "",
+        setPassword: (password) => {
           set((state) => {
-            state.prompt = prompt;
+            state.password = password;
           });
         },
       })),
       {
-        name: "chat",
+        name: "app",
         storage: createJSONStorage(() => localStorage),
       },
     ),
