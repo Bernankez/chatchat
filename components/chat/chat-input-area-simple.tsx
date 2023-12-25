@@ -39,7 +39,6 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   });
 
   function adjustInput(el: HTMLTextAreaElement) {
-    // TODO adjust Input when setState
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   }

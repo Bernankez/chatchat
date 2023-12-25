@@ -4,9 +4,11 @@ import { Toggle } from "../ui/toggle";
 import { useSettingsStore } from "@/store/settings-store";
 import { useMemo } from "react";
 import { asideWidth } from "@/app/components/Aside";
+import { useScrollTopBottom } from "@/hooks/use-scroll-top-bottom";
 
 export default function FloatingButtons() {
   const { settingsPanelOpen, setSettingsPanelOpen } = useSettingsStore();
+  const { scrollToBottom, scrollToTop, isBottom, isTop } = useScrollTopBottom();
 
   const style = useMemo(() => {
     if (settingsPanelOpen) {
@@ -27,10 +29,18 @@ export default function FloatingButtons() {
         </Button>
       </Toggle>
       <div className="w-fit flex flex-col rounded-md overflow-hidden">
-        <Button className="rounded-none" variant="ghost" size="icon">
+        <Button
+          className={`rounded-none transition duration-250 ${isTop ? "opacity-0" : ""}`}
+          variant="ghost"
+          size="icon"
+          onClick={scrollToTop}>
           <Icon icon="lucide:arrow-up" width="1.1rem"></Icon>
         </Button>
-        <Button className="rounded-none" variant="ghost" size="icon">
+        <Button
+          className={`rounded-none transition duration-250 ${isBottom ? "opacity-0" : ""}`}
+          variant="ghost"
+          size="icon"
+          onClick={scrollToBottom}>
           <Icon icon="lucide:arrow-down" width="1.1rem"></Icon>
         </Button>
       </div>
