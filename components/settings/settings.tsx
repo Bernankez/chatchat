@@ -7,7 +7,6 @@ import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
 import Placeholder from "../ui/placeholder";
 import { Toggle } from "../ui/toggle";
 import { useTranslation } from "react-i18next";
-import { InputEl } from "@/hooks/use-input-state";
 
 export default function Settings() {
   const { setSettingsPanelOpen, settingsPanelOpen } = useSettingsStore();
@@ -28,9 +27,21 @@ export default function Settings() {
           <SheetContent
             className="w-screen"
             onInteractOutside={(e) => {
-              // TODO ignore elements with [data-ignore-xxx]
-              // Do not close sheet when toggle `Simple Input` settings
-              if (e.type.includes("focusOutside") && ["textarea", "input"].includes((e.target as InputEl).type)) {
+              // Do not close sheet with data-ignore/data-ignore-focus/data-ignore-pointer
+              const originEl = e.target as HTMLElement;
+              const el = findElement(originEl, ["ignore", "ignoreFocus", "ignorePointer"]);
+              if (!el) return;
+              if (el.dataset.ignore === "" || el.dataset.ignore === "panel") {
+                e.preventDefault();
+              } else if (
+                e.type.includes("focusOutside") &&
+                (el.dataset.ignoreFocus === "" || el.dataset.ignoreFocus === "panel")
+              ) {
+                e.preventDefault();
+              } else if (
+                e.type.includes("pointerDownOutside") &&
+                (el.dataset.ignorePointer === "" || el.dataset.ignorePointer === "panel")
+              ) {
                 e.preventDefault();
               }
             }}>
@@ -40,4 +51,32 @@ export default function Settings() {
       </Sheet>
     </Placeholder>
   );
+}
+
+function findElement(el: HTMLElement, props: string[]) {
+  const hasProp = props.some((item) => item in el.dataset);
+  if (hasProp) {
+    return el;
+  }
+  const parent = el.parentNode;
+  if (!isHTMLElement(parent)) {
+    return undefined;
+  }
+  return findElement(parent, props);
+}
+
+function isHTMLElement(el: any): el is HTMLElement {
+  if (!el || typeof el !== "object") {
+    return false;
+  }
+  if (!("cloneNode" in el) || !("nodeType" in el)) {
+    return false;
+  }
+  const div = document.createElement("div");
+  try {
+    div.appendChild(el.cloneNode(true));
+    return el.nodeType === 1;
+  } catch (e) {
+    return false;
+  }
 }

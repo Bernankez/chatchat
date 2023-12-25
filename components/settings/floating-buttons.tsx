@@ -22,7 +22,7 @@ export default function FloatingButtons() {
   return (
     <div className="fixed bottom-6 flex flex-col gap-3 transition-[right] duration-500 ease-in-out" style={style}>
       <Toggle asChild pressed={settingsPanelOpen} onPressedChange={setSettingsPanelOpen}>
-        <Button className="shadow" variant="ghost" size="icon">
+        <Button data-ignore="panel" className="shadow" variant="ghost" size="icon">
           <Icon icon="lucide:settings" width="1.1rem"></Icon>
         </Button>
       </Toggle>

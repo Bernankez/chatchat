@@ -60,6 +60,7 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   return (
     <div className="flex gap-3">
       <textarea
+        data-ignore-focus="panel"
         ref={textareaRef}
         autoFocus
         rows={1}

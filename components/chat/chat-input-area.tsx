@@ -112,6 +112,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         2000/1222
       </div>
       <textarea
+        data-ignore-focus="panel"
         ref={textareaRef}
         rows={6}
         autoFocus
