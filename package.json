@@ -44,6 +44,7 @@
     "react-i18next": "^13.5.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
+    "ua-parser-js": "^1.0.37",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
@@ -53,6 +54,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/ua-parser-js": "^0.7.39",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

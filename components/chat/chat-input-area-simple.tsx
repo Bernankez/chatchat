@@ -21,8 +21,7 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { back, forward } = useContext(ChatInputAreaContext);
   const { onInput, ...textareaProps } = useInputState(props.value, props.onInput);
-  useUndoRedo({
-    el: textareaRef.current,
+  const { onKeyDown: undoRedoKeyDown } = useUndoRedo({
     redo: () => {
       forward();
     },
@@ -30,7 +29,7 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
       back();
     },
   });
-  const { onKeyDown } = useSendWrap({
+  const { onKeyDown: sendWrapKeyDown } = useSendWrap({
     send: () => {
       console.log("send");
     },
@@ -71,7 +70,10 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
           adjustInput(e.currentTarget);
           onInput(e);
         }}
-        onKeyDown={onKeyDown}
+        onKeyDown={(e) => {
+          undoRedoKeyDown(e);
+          sendWrapKeyDown(e);
+        }}
         {...textareaProps}></textarea>
       <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("send")}>

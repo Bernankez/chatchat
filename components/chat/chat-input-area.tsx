@@ -28,8 +28,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const [clickOutside, setClickOutside] = useState(false);
   const { back, forward } = useContext(ChatInputAreaContext);
   const textareaProps = useInputState(props.value, props.onInput);
-  useUndoRedo({
-    el: textareaRef.current,
+  const { onKeyDown: undoRedoKeyDown } = useUndoRedo({
     redo: () => {
       forward();
     },
@@ -37,7 +36,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       back();
     },
   });
-  const { onKeyDown } = useSendWrap({
+  const { onKeyDown: sendWrapKeyDown } = useSendWrap({
     send: () => {
       console.log("send");
     },
@@ -121,7 +120,10 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         onFocus={() => {
           setClickOutside(false);
         }}
-        onKeyDown={onKeyDown}
+        onKeyDown={(e) => {
+          undoRedoKeyDown(e);
+          sendWrapKeyDown(e);
+        }}
         {...textareaProps}></textarea>
 
       <div className="px-6 flex items-center gap-3 justify-end">
