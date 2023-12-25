@@ -22,11 +22,11 @@ export default function FloatingButtons() {
   return (
     <div className="fixed bottom-6 flex flex-col gap-3 transition-[right] duration-500 ease-in-out" style={style}>
       <Toggle asChild pressed={settingsPanelOpen} onPressedChange={setSettingsPanelOpen}>
-        <Button data-ignore="panel" className="shadow" variant="ghost" size="icon">
+        <Button data-ignore="panel" variant="ghost" size="icon">
           <Icon icon="lucide:settings" width="1.1rem"></Icon>
         </Button>
       </Toggle>
-      <div className="w-fit flex flex-col rounded-md overflow-hidden shadow">
+      <div className="w-fit flex flex-col rounded-md overflow-hidden">
         <Button className="rounded-none" variant="ghost" size="icon">
           <Icon icon="lucide:arrow-up" width="1.1rem"></Icon>
         </Button>

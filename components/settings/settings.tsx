@@ -18,7 +18,7 @@ export default function Settings() {
       <Sheet modal={false} open={settingsPanelOpen} onOpenChange={setSettingsPanelOpen}>
         <Toggle asChild pressed={settingsPanelOpen}>
           <SheetTrigger asChild>
-            <TooltipButton variant="outline" size="icon" tooltip={t("settings")}>
+            <TooltipButton data-ignore="panel" variant="outline" size="icon" tooltip={t("settings")}>
               <Icon icon="lucide:settings" width="1.1rem"></Icon>
             </TooltipButton>
           </SheetTrigger>
