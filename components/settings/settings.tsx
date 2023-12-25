@@ -25,7 +25,7 @@ export default function Settings() {
         </Toggle>
         {smaller("lg") && (
           <SheetContent
-            className="w-screen"
+            className="w-full"
             onInteractOutside={(e) => {
               // Do not close sheet with data-ignore/data-ignore-focus/data-ignore-pointer
               const originEl = e.target as HTMLElement;
