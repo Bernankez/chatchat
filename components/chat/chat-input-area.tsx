@@ -13,6 +13,7 @@ import { useUndoRedo } from "@/hooks/use-undo-redo";
 import useSendWrap from "@/hooks/use-send-wrap";
 import { ChatInputAreaContext } from "@/app/components/Footer";
 import ChatSendWrap from "./chat-send-wrap";
+import { modelList } from "@/lib/const";
 
 export interface ChatInputAreaProps {
   value: string;
@@ -37,8 +38,21 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
     },
   });
   const { onKeyDown: sendWrapKeyDown } = useSendWrap({
-    send: () => {
+    send: async () => {
+      console.log(props.value);
       console.log("send");
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        body: JSON.stringify({
+          messages: [
+            {
+              role: "user",
+              content: props.value,
+            },
+          ],
+          model: modelList[0],
+        }),
+      });
     },
     wrap: () => {
       console.log("wrap");
