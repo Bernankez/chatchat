@@ -1,17 +1,41 @@
 /**
  * ref https://sdk.vercel.ai/docs/guides/providers/openai
  */
-// import { ProxyAgent, fetch, type RequestInit } from "undici";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { resolveArgs } from "@/lib/resolve";
+import { getServerTranslations } from "@/lang/server";
+import { response } from "@/lib/response";
 
 // IMPORTANT! Set the runtime to edge
 export const runtime = "edge";
 
 export async function POST(request: Request) {
+  const { t } = await getServerTranslations("openai");
   const body = await request.json();
-  const { apiKey, httpsProxy, baseUrl } = resolveArgs(body);
+  const { apiKey, baseUrl } = resolveArgs(body);
   const { messages, model } = body;
+
+  if (!messages) {
+    return response(
+      {
+        error: {
+          message: t("noMessages"),
+        },
+      },
+      400,
+    );
+  }
+
+  if (!apiKey) {
+    return response(
+      {
+        error: {
+          message: t("noApiKey"),
+        },
+      },
+      401,
+    );
+  }
 
   const payload: RequestInit = {
     headers: {
@@ -27,13 +51,20 @@ export async function POST(request: Request) {
     }),
   };
 
-  // if (httpsProxy) {
-  //   payload.dispatcher = new ProxyAgent(httpsProxy);
-  // }
+  const res = await fetch(`${baseUrl}/v1/chat/completions`, payload).catch((e: Error) => {
+    console.error(e);
+    return response(
+      {
+        error: {
+          code: e.name,
+          message: e.message,
+        },
+      },
+      500,
+    );
+  });
 
-  const response = (await fetch(`${baseUrl}/v1/chat/completions`, payload)) as unknown as Response;
-
-  const stream = OpenAIStream(response);
+  const stream = OpenAIStream(res);
 
   return new StreamingTextResponse(stream);
 }
