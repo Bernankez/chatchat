@@ -12,7 +12,7 @@ interface SettingsState {
   setSwapEnter: (value: boolean) => void;
   useSimpleInput: boolean;
   setUseSimpleInput: (value: boolean) => void;
-  reset: () => void;
+  resetInterfaceSettings: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -43,7 +43,7 @@ export const useSettingsStore = create<SettingsState>()(
             state.useSimpleInput = value;
           });
         },
-        reset: () => {
+        resetInterfaceSettings: () => {
           set((state) => {
             state.swapEnter = false;
             state.useSimpleInput = true;

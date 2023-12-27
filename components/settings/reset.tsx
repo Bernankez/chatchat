@@ -5,10 +5,14 @@ import { useTranslation } from "react-i18next";
 
 export default function Reset() {
   const { t } = useTranslation("settings");
-  const { reset } = useSettingsStore();
+  const { resetInterfaceSettings } = useSettingsStore();
 
   return (
-    <TooltipButton variant="outline" size="icon" tooltip={t("panel.resetInterfaceSettings")} onClick={reset}>
+    <TooltipButton
+      variant="outline"
+      size="icon"
+      tooltip={t("panel.resetInterfaceSettings")}
+      onClick={resetInterfaceSettings}>
       <Icon icon="lucide:rotate-cw" width="1.1rem"></Icon>
     </TooltipButton>
   );
