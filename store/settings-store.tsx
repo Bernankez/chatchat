@@ -4,6 +4,7 @@ import { immer } from "zustand/middleware/immer";
 import { IndexedDBStorage } from "./storage";
 
 interface SettingsState {
+  /** ------ Interface Settings ------ */
   settingsPanelOpen: boolean;
   setSettingsPanelOpen: (open: boolean) => void;
   wideScreenMode: boolean;
@@ -13,6 +14,12 @@ interface SettingsState {
   useSimpleInput: boolean;
   setUseSimpleInput: (value: boolean) => void;
   resetInterfaceSettings: () => void;
+  /** ------ OpenAI API Settings ------ */
+  defaultTemperature: number;
+  setDefaultTemperature: (value: number) => void;
+  /** Use stream for response */
+  useStream: boolean;
+  setUseStream: (value: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -47,6 +54,18 @@ export const useSettingsStore = create<SettingsState>()(
           set((state) => {
             state.swapEnter = false;
             state.useSimpleInput = true;
+          });
+        },
+        defaultTemperature: 0.6,
+        setDefaultTemperature: (value) => {
+          set((state) => {
+            state.defaultTemperature = value;
+          });
+        },
+        useStream: true,
+        setUseStream: (value) => {
+          set((state) => {
+            state.useStream = value;
           });
         },
       })),

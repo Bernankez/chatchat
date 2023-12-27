@@ -2,20 +2,21 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { IndexedDBStorage } from "./storage";
+import { Conversation } from "@/lib/types";
 
 interface ChatState {
-  prompt: string;
-  setPrompt: (prompt: string) => void;
+  conversations: Conversation[];
+  setConversations: (conversations: Conversation[]) => void;
 }
 
 export const useChatStore = create<ChatState>()(
   devtools(
     persist(
       immer((set) => ({
-        prompt: "",
-        setPrompt: (prompt) => {
+        conversations: [],
+        setConversations: (conversations) => {
           set((state) => {
-            state.prompt = prompt;
+            state.conversations = conversations;
           });
         },
       })),
