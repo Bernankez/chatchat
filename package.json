@@ -33,6 +33,7 @@
     "i18next": "^23.7.11",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-resources-to-backend": "^1.2.0",
+    "idb-keyval": "^6.2.1",
     "immer": "^10.0.3",
     "katex": "^0.16.9",
     "lucide-react": "^0.294.0",

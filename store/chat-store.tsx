@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import { IndexedDBStorage } from "./storage";
 
 interface ChatState {
   prompt: string;
@@ -20,7 +21,7 @@ export const useChatStore = create<ChatState>()(
       })),
       {
         name: "chat",
-        storage: createJSONStorage(() => localStorage),
+        storage: createJSONStorage(() => IndexedDBStorage),
       },
     ),
   ),
