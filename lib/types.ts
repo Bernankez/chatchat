@@ -1,7 +1,7 @@
 export type Role = "system" | "user" | "assistant";
 
 export interface Conversation {
-  id: string | number;
+  id: string;
   temperature: number;
   messages: Message[];
   prompt?: string;

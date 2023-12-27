@@ -5,18 +5,20 @@ import { IndexedDBStorage } from "./storage";
 import { Conversation } from "@/lib/types";
 
 interface ChatState {
-  conversations: Conversation[];
-  setConversations: (conversations: Conversation[]) => void;
+  conversations: Record<string, Conversation>;
+  getConversation: (id: string) => Conversation | undefined;
+  setConversations: (id: string, conversation: Conversation) => void;
 }
 
 export const useChatStore = create<ChatState>()(
   devtools(
     persist(
-      immer((set) => ({
-        conversations: [],
-        setConversations: (conversations) => {
+      immer((set, get) => ({
+        conversations: {},
+        getConversation: (id: string) => get().conversations[id],
+        setConversations: (id, conversation) => {
           set((state) => {
-            state.conversations = conversations;
+            state.conversations[id] = conversation;
           });
         },
       })),
