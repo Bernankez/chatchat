@@ -1,4 +1,6 @@
 {
+  "commonError": "请求失败",
   "noApiKey": "没有提供OpenAI API Key",
-  "noMessages": "没有输入内容"
+  "noMessages": "没有输入内容",
+  "noData": "没有返回数据"
 }

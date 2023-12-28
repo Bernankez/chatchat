@@ -3,7 +3,7 @@
 // i18n hack
 // ref https://github.com/grigorii-zander/next-app-dir-i18next-no-locale-path-example
 
-import i18next from "i18next";
+import i18next, { i18n } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import resourcesToBackend from "i18next-resources-to-backend";
 import React, { useMemo } from "react";
@@ -24,6 +24,14 @@ i18next
       caches: ["cookie"],
     },
   });
+
+export async function loadNamespace(namespace: string) {
+  return new Promise<i18n>((resolve) => {
+    i18next.loadNamespaces(namespace).then(() => {
+      resolve(i18next);
+    });
+  });
+}
 
 export function I18nProvider({ children, language }: { children: React.ReactNode; language: string }) {
   useMemo(() => {

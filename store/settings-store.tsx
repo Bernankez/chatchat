@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createStorage } from "./storage";
+import { Model } from "@/lib/types";
 
 interface SettingsState {
   /** ------ Interface Settings ------ */
@@ -17,6 +18,8 @@ interface SettingsState {
   /** ------ OpenAI API Settings ------ */
   defaultTemperature: number;
   setDefaultTemperature: (value: number) => void;
+  defaultModel: Model;
+  setDefaultModel: (value: Model) => void;
   /** Use stream for response */
   useStream: boolean;
   setUseStream: (value: boolean) => void;
@@ -60,6 +63,12 @@ export const useSettingsStore = create<SettingsState>()(
         setDefaultTemperature: (value) => {
           set((state) => {
             state.defaultTemperature = value;
+          });
+        },
+        defaultModel: "gpt-4-1106-preview",
+        setDefaultModel: (value) => {
+          set((state) => {
+            state.defaultModel = value;
           });
         },
         useStream: true,

@@ -1,1 +1,3 @@
-export const modelList = ["gpt-4-1106-preview"];
+import { Model } from "./types";
+
+export const modelList: Model[] = ["gpt-4-1106-preview"];

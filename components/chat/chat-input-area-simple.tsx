@@ -76,12 +76,17 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
         {...textareaProps}></textarea>
       <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("send")}>
-          <Icon icon="simple-icons:ghost" width="1.5rem" color="#c14344"></Icon>
+          <Icon icon="gravity-ui:circle" width="1.5rem" color="#c14344"></Icon>
+        </TooltipButton>
+      </Placeholder>
+      <Placeholder skeleton="w-14 h-14 shrink-0">
+        <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("archive")}>
+          <Icon icon="gravity-ui:archive" width="1.4rem"></Icon>
         </TooltipButton>
       </Placeholder>
       <Placeholder skeleton="w-14 h-14 shrink-0">
         <TooltipButton variant="secondary" size="icon" className="shrink-0 w-14 h-14" tooltip={t("clear")}>
-          <Icon icon="lucide:paintbrush" width="1.4rem"></Icon>
+          <Icon icon="gravity-ui:trash-bin" width="1.4rem"></Icon>
         </TooltipButton>
       </Placeholder>
     </div>
