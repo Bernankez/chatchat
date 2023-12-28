@@ -1,10 +1,14 @@
 import { StateStorage } from "zustand/middleware";
-import { get, set, del, createStore, UseStore } from "idb-keyval";
+import { get, set, del, createStore as _createStore, UseStore } from "idb-keyval";
 
 let globalStore: UseStore | undefined;
 
+export function createStore() {
+  return _createStore("chatchat", "globalStore");
+}
+
 export function createStorage() {
-  const store = createStore("chatchat", "globalStore");
+  const store = createStore();
   if (!globalStore) {
     globalStore = store;
   }

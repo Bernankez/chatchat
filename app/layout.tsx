@@ -7,6 +7,7 @@ import { I18nProvider } from "@/lang/client";
 import "@/styles/globals.css";
 import "@/styles/content.css";
 import "katex/dist/katex.min.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           suppressHydrationWarning>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

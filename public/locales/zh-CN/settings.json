@@ -10,6 +10,9 @@
     "swapSendWrap": "交换发送和换行键",
     "useSimpleInput": "使用简易输入框",
     "useClearButton": "使用清空代替归档",
-    "resetInterfaceSettings": "重置界面设置"
+    "resetInterfaceSettings": "重置界面设置",
+    "clearAllCache": "清除所有缓存",
+    "clearAllCacheTip": "这将会删除所有对话以及保存的设置，并且不可恢复，继续吗？",
+    "clearAllCacheSucceed": "所有缓存已清除，请刷新页面以生效"
   }
 }

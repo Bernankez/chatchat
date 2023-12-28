@@ -10,6 +10,9 @@
     "swapSendWrap": "Swap send and wrap keys",
     "useSimpleInput": "Use simple input",
     "useClearButton": "Use the Clear Button instead of the Archive Button",
-    "resetInterfaceSettings": "Reset Interface Settings"
+    "resetInterfaceSettings": "Reset Interface Settings",
+    "clearAllCache": "CLEAR ALL CACHE",
+    "clearAllCacheTip": "This action will delete all conversations and saved settings and cannot be undone. Continue?",
+    "clearAllCacheSucceed": "All cache cleared, please refresh the page to take effect"
   }
 }

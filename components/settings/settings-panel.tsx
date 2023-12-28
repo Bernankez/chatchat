@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import ChatSendWrap from "../chat/chat-send-wrap";
 import Language from "./language";
 import Reset from "./reset";
+import ClearCacheButton from "./clear-cache-button";
 
 export interface SettingsPanelProps {
   style?: CSSProperties;
@@ -64,6 +65,9 @@ export default function SettingsPanel(props: SettingsPanelProps) {
             <Language></Language>
           </div>
         </div>
+      </div>
+      <div className="flex justify-end">
+        <ClearCacheButton></ClearCacheButton>
       </div>
     </div>
   );
