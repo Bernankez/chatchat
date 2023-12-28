@@ -18,7 +18,8 @@ export interface SettingsPanelProps {
 export default function SettingsPanel(props: SettingsPanelProps) {
   const { onClose, className, style } = props;
   const { t } = useTranslation("settings");
-  const { swapEnter, setSwapEnter, useSimpleInput, setUseSimpleInput } = useSettingsStore();
+  const { swapEnter, setSwapEnter, useSimpleInput, setUseSimpleInput, useClearButton, setUseClearButton } =
+    useSettingsStore();
 
   return (
     <div className={`${className || ""} flex flex-col gap-4`} style={style}>
@@ -53,6 +54,10 @@ export default function SettingsPanel(props: SettingsPanelProps) {
           <Label className="flex items-center justify-between">
             <div>{t("panel.useSimpleInput")}</div>
             <Switch checked={useSimpleInput} onCheckedChange={setUseSimpleInput}></Switch>
+          </Label>
+          <Label className="flex items-center justify-between gap-3">
+            <div>{t("panel.useClearButton")}</div>
+            <Switch checked={useClearButton} onCheckedChange={setUseClearButton}></Switch>
           </Label>
           <div className="flex items-center justify-end gap-3">
             <Reset></Reset>

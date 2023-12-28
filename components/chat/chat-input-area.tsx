@@ -14,6 +14,7 @@ import useSendWrap from "@/hooks/use-send-wrap";
 import { ChatInputAreaContext } from "@/app/components/Footer";
 import ChatSendWrap from "./chat-send-wrap";
 import { useChat } from "@/hooks/use-chat";
+import { useSettingsStore } from "@/store/settings-store";
 
 export interface ChatInputAreaProps {
   value: string;
@@ -29,6 +30,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const [clickOutside, setClickOutside] = useState(false);
   const { back, forward } = useContext(ChatInputAreaContext);
   const textareaProps = useInputState(props.value, props.onInput);
+  const { useClearButton } = useSettingsStore();
   const { currentConversation, send, init, clear, switchConversation } = useChat();
   const { onKeyDown: undoRedoKeyDown } = useUndoRedo({
     redo: () => {
@@ -155,12 +157,15 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         <TooltipButton variant="secondary" size="icon" tooltip={t("send")} onClick={sendMessage}>
           <Icon icon="gravity-ui:circle" width="1.4rem" color="#c14344"></Icon>
         </TooltipButton>
-        <TooltipButton variant="secondary" size="icon" tooltip={t("archive")} onClick={clearConversation}>
-          <Icon icon="gravity-ui:archive" width="1.4rem"></Icon>
-        </TooltipButton>
-        <TooltipButton variant="secondary" size="icon" tooltip={t("clear")} onClick={archiveConversation}>
-          <Icon icon="gravity-ui:trash-bin" width="1.4rem"></Icon>
-        </TooltipButton>
+        {useClearButton ? (
+          <TooltipButton variant="secondary" size="icon" tooltip={t("clear")} onClick={archiveConversation}>
+            <Icon icon="gravity-ui:trash-bin" width="1.4rem"></Icon>
+          </TooltipButton>
+        ) : (
+          <TooltipButton variant="secondary" size="icon" tooltip={t("archive")} onClick={clearConversation}>
+            <Icon icon="gravity-ui:archive" width="1.4rem"></Icon>
+          </TooltipButton>
+        )}
       </div>
     </div>
   );

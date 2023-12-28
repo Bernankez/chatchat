@@ -9,6 +9,7 @@
     "openAISettings": "OpenAI设置",
     "swapSendWrap": "交换发送和换行键",
     "useSimpleInput": "使用简易输入框",
+    "useClearButton": "使用清空代替归档",
     "resetInterfaceSettings": "重置界面设置"
   }
 }

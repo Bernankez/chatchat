@@ -9,6 +9,7 @@
     "openAISettings": "OpenAI Settings",
     "swapSendWrap": "Swap send and wrap keys",
     "useSimpleInput": "Use simple input",
+    "useClearButton": "Use the Clear Button instead of the Archive Button",
     "resetInterfaceSettings": "Reset Interface Settings"
   }
 }

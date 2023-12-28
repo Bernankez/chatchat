@@ -14,6 +14,8 @@ interface SettingsState {
   setSwapEnter: (value: boolean) => void;
   useSimpleInput: boolean;
   setUseSimpleInput: (value: boolean) => void;
+  useClearButton: boolean;
+  setUseClearButton: (value: boolean) => void;
   resetInterfaceSettings: () => void;
   /** ------ OpenAI API Settings ------ */
   defaultTemperature: number;
@@ -53,10 +55,17 @@ export const useSettingsStore = create<SettingsState>()(
             state.useSimpleInput = value;
           });
         },
+        useClearButton: false,
+        setUseClearButton(value) {
+          set((state) => {
+            state.useClearButton = value;
+          });
+        },
         resetInterfaceSettings: () => {
           set((state) => {
             state.swapEnter = false;
             state.useSimpleInput = true;
+            state.useClearButton = false;
           });
         },
         defaultTemperature: 0.6,
