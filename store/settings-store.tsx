@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { IndexedDBStorage } from "./storage";
+import { createStorage } from "./storage";
 
 interface SettingsState {
   /** ------ Interface Settings ------ */
@@ -71,7 +71,7 @@ export const useSettingsStore = create<SettingsState>()(
       })),
       {
         name: "settings",
-        storage: createJSONStorage(() => IndexedDBStorage),
+        storage: createJSONStorage(() => createStorage()),
         // Omit key from state
         partialize: (state) =>
           Object.fromEntries(Object.entries(state).filter(([key]) => !["settingsPanelOpen"].includes(key))),

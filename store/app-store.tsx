@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { IndexedDBStorage } from "./storage";
+import { createStorage } from "./storage";
 
 interface AppState {
   password: string;
@@ -21,7 +21,7 @@ export const useAppStore = create<AppState>()(
       })),
       {
         name: "app",
-        storage: createJSONStorage(() => IndexedDBStorage),
+        storage: createJSONStorage(() => createStorage()),
       },
     ),
   ),
