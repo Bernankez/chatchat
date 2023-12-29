@@ -37,6 +37,7 @@ export function useChat(options?: UseChatOptions) {
     return id;
   }
 
+  // TODO loading state push to message list
   async function send(text: string) {
     const _conversation = currentConversation;
     const _id = _conversation?.id;

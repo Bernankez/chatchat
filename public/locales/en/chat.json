@@ -3,5 +3,11 @@
   "send": "Send",
   "clear": "Clear",
   "archive": "Archive",
-  "wrap": "Wrap"
+  "wrap": "Wrap",
+  "conversation": {
+    "settings": "Conversation Settings",
+    "complete": "Complete",
+    "prompts": "Prompts",
+    "temperature": "Temperature"
+  }
 }

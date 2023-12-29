@@ -29,12 +29,12 @@ export default function Header() {
         chatchat
       </div>
       <div className="flex items-center gap-3">
-        <Placeholder skeleton="w-28 h-6">
-          <div className="text-muted-foreground shrink-0 cursor-default">{t("subTitle")}</div>
-        </Placeholder>
+        <div className="text-muted-foreground shrink-0 cursor-default">{t("subTitle")}</div>
         <ModelSelect value={model} onValueChange={setModel}></ModelSelect>
       </div>
-      <div>{/* <ChatSettings></ChatSettings> */}</div>
+      <div>
+        <ChatSettings></ChatSettings>
+      </div>
     </>
   );
 }
