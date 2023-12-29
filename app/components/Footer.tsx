@@ -18,6 +18,7 @@ export default function Footer() {
   const state = value || "";
 
   return (
+    // TODO markdown editor
     // TODO disable send when receiving response
     <ChatInputAreaContext.Provider value={{ back, forward }}>
       <Placeholder
