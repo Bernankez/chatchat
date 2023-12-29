@@ -29,6 +29,7 @@ export default function FloatingButtons() {
         </Button>
       </Toggle>
       <div className="w-fit flex flex-col rounded-md overflow-hidden">
+        {/* TODO fix when no scroll bar exists */}
         <Button
           className={`rounded-none transition duration-250 ${isTop ? "opacity-0" : ""}`}
           variant="ghost"
