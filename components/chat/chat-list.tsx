@@ -42,6 +42,7 @@ export default function ChatList({ role = "assistant", response, className, type
   }, [role, type, response]);
 
   return (
+    // TODO ability to resend message
     <div
       className={`flex items-start gap-3 w-full py-6 px-3 rounded-sm md:hover:bg-accent/30 transition ${
         role === "user" ? "flex-row-reverse" : ""

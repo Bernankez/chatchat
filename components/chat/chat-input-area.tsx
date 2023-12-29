@@ -135,6 +135,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
               onEmojiSelect={(picked: any) => insertEmoji(picked.native)}></Picker>
           </PopoverContent>
         </Popover>
+        {/* TODO calculate tokens */}
         2000/1222
       </div>
       <textarea
