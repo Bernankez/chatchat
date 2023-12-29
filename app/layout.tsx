@@ -17,6 +17,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "chatchat",
   description: "Opinionated OpenAI API client.",
+  icons: {
+    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico",
+    other: [
+      {
+        rel: "manifest",
+        url: "/site.webmanifest",
+      },
+      {
+        rel: "mask-icon",
+        url: "/safari-pinned-tab.svg",
+        color: "#5bbad5",
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
