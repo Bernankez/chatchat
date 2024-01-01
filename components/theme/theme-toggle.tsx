@@ -40,7 +40,7 @@ export default function DarkToggle() {
 
   return (
     <TooltipButton
-      variant="outline"
+      variant="ghost"
       size="icon"
       className="capitalize"
       onClick={toggleTheme}

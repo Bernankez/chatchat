@@ -9,7 +9,7 @@ export default function Reset() {
 
   return (
     <TooltipButton
-      variant="outline"
+      variant="ghost"
       size="icon"
       tooltip={t("panel.resetInterfaceSettings")}
       onClick={resetInterfaceSettings}>

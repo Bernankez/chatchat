@@ -27,7 +27,7 @@ export default function Language() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Placeholder skeleton="w-10 h-10">
-          <TooltipButton variant="outline" size="icon" className="text-muted-foreground" tooltip={t("lang")}>
+          <TooltipButton variant="ghost" size="icon" className="text-muted-foreground" tooltip={t("lang")}>
             <Icon icon="lucide:languages" width="1.1rem"></Icon>
           </TooltipButton>
         </Placeholder>
