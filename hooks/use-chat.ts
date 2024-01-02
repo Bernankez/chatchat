@@ -3,7 +3,6 @@ import { Message } from "@/lib/types";
 import { createConversation, useChatStore } from "@/store/chat-store";
 import { useMemo, useState } from "react";
 import { IdGenerator } from "@/lib/utils";
-import { useSettingsStore } from "@/store/settings-store";
 
 export interface UseChatOptions {}
 
@@ -12,7 +11,6 @@ export function useChat(options?: UseChatOptions) {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const { conversation, setConversation, history, addHistory } = useChatStore();
-  const { model } = useSettingsStore();
 
   const historyList = useMemo(
     () => [...history.entries()].reverse().map(([_id, conversation]) => conversation),
@@ -40,7 +38,7 @@ export function useChat(options?: UseChatOptions) {
       const response = await fetch("/api/chat", {
         method: "POST",
         body: JSON.stringify({
-          model: model,
+          model: conversation.model,
           messages: messagesWithPrompt,
         }),
         signal: abortCtrl.signal,
