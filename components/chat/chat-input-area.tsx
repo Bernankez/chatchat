@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 import TooltipButton from "../ui/tooltip-button";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import Placeholder from "../ui/placeholder";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import data from "@emoji-mart/data";
@@ -31,7 +31,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const { back, forward } = useContext(ChatInputAreaContext);
   const textareaProps = useInputState(props.value, props.onInput);
   const { useClearButton } = useSettingsStore();
-  const { currentConversation, send, init, clear, switchConversation } = useChat();
+  const { send, clear, archive } = useChat();
   const { onKeyDown: undoRedoKeyDown } = useUndoRedo({
     redo: () => {
       forward();
@@ -90,29 +90,12 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
     }
   }
 
-  useEffect(() => {
-    if (!currentConversation) {
-      const id = init();
-      switchConversation(id);
-    }
-  }, []);
-
   function sendMessage() {
     if (!props.value) {
       return;
     }
     send(props.value);
     props.onInput("");
-  }
-
-  function clearConversation() {
-    clear();
-    archiveConversation();
-  }
-
-  function archiveConversation() {
-    const id = init();
-    switchConversation(id);
   }
 
   return (
@@ -159,11 +142,18 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
           <Icon icon="gravity-ui:circle" width="1.4rem" color="#c14344"></Icon>
         </TooltipButton>
         {useClearButton ? (
-          <TooltipButton variant="secondary" size="icon" tooltip={t("clear")} onClick={archiveConversation}>
+          <TooltipButton variant="secondary" size="icon" tooltip={t("clear")} onClick={clear}>
             <Icon icon="gravity-ui:trash-bin" width="1.4rem"></Icon>
           </TooltipButton>
         ) : (
-          <TooltipButton variant="secondary" size="icon" tooltip={t("archive")} onClick={clearConversation}>
+          <TooltipButton
+            variant="secondary"
+            size="icon"
+            tooltip={t("archive")}
+            onClick={() => {
+              archive();
+              clear();
+            }}>
             <Icon icon="gravity-ui:archive" width="1.4rem"></Icon>
           </TooltipButton>
         )}

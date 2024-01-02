@@ -25,10 +25,6 @@ export default function Collapse({ children, className, ...props }: CollapseProp
     trigger: "onOpenChange",
   });
 
-  useEffect(() => {
-    console.log(open);
-  }, [open]);
-
   return (
     <CollapseContext.Provider value={{ open, setOpen }}>
       <div

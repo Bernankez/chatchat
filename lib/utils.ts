@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -22,3 +23,5 @@ export function increaseWithUnit(target: string | number, delta: number): string
   if (Number.isNaN(result)) return target;
   return result + unit;
 }
+
+export const IdGenerator = nanoid;

@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useChat } from "@/hooks/use-chat";
 
 export default function Chat() {
-  const { currentConversation } = useChat();
+  const { conversation } = useChat();
 
   return (
     <Placeholder
@@ -15,8 +15,8 @@ export default function Chat() {
         </div>
       }>
       <>
-        {currentConversation?.messages.map((message) => (
-          <ChatList response={message.content} role={message.role} key={message._id} type={message.type}></ChatList>
+        {conversation.messages.map((message) => (
+          <ChatList response={message.content} role={message.role} key={message.id} type={message.type}></ChatList>
         ))}
       </>
     </Placeholder>

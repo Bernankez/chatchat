@@ -1,101 +1,68 @@
 import { handleResponse } from "@/lib/response";
 import { Message } from "@/lib/types";
-import { useChatStore } from "@/store/chat-store";
-import { nanoid } from "ai";
-import { useMemo, useState } from "react";
+import { createConversation, useChatStore } from "@/store/chat-store";
+import { useState } from "react";
+import { IdGenerator } from "@/lib/utils";
 
-export interface UseChatOptions {
-  idGenerator?: () => string;
-}
+export interface UseChatOptions {}
 
 export function useChat(options?: UseChatOptions) {
-  const { idGenerator = nanoid } = options || {};
-
-  const {
-    currentConversationId,
-    conversations,
-    getConversation,
-    updateConversation,
-    addConversation,
-    setCurrentConversationId,
-  } = useChatStore();
-
   const [controller, setController] = useState<AbortController>();
   const [loading, setLoading] = useState(false);
-  const [receiving, setReceiving] = useState(false);
-
-  const currentConversation = useMemo(() => {
-    if (!currentConversationId) {
-      return undefined;
-    }
-    return getConversation(currentConversationId);
-  }, [currentConversationId, conversations]);
-
-  function init() {
-    const id = idGenerator();
-    addConversation(id);
-    return id;
-  }
+  const [generating, setGenerating] = useState(false);
+  const { conversation, setConversation, history, addHistory } = useChatStore();
 
   // TODO loading state push to message list
   async function send(text: string) {
-    const _conversation = currentConversation;
-    const _id = _conversation?.id;
-    if (!_conversation || !_id) {
-      return;
-    }
-    const messages: Message[] = [..._conversation.messages, { role: "user", content: text, _id: idGenerator() }];
-    updateConversation(_id, {
-      ..._conversation!,
-      messages: [...messages],
-    });
-    const messagesWithPrompt = messages.map(({ role, content }) => ({
+    const newMessages: Message[] = [...conversation.messages, { role: "user", content: text, id: IdGenerator() }];
+    setConversation({ ...conversation, messages: [...newMessages] });
+    const messagesWithPrompt = newMessages.map(({ role, content }) => ({
       role,
       content,
     }));
-    if (_conversation.prompt) {
+    if (conversation.prompts) {
       messagesWithPrompt.unshift({
         role: "assistant",
-        content: _conversation.prompt,
+        content: conversation.prompts,
       });
     }
     try {
-      const _controller = new AbortController();
-      setController(_controller);
+      const abortCtrl = new AbortController();
+      setController(abortCtrl);
       setLoading(true);
       const response = await fetch("/api/chat", {
         method: "POST",
         body: JSON.stringify({
-          model: _conversation.model,
+          model: conversation.model,
           messages: messagesWithPrompt,
         }),
-        signal: _controller.signal,
+        signal: abortCtrl.signal,
       });
       setLoading(false);
-      setReceiving(true);
+      setGenerating(true);
       await handleResponse(response, (text) => {
-        updateConversation(_id, {
-          ..._conversation!,
-          messages: [...messages, { role: "assistant", content: text, _id: idGenerator() }],
+        setConversation({
+          ...conversation,
+          messages: [...newMessages, { role: "assistant", content: text, id: IdGenerator() }],
         });
       });
     } catch (e: any) {
       console.error(e);
-      updateConversation(_id, {
-        ..._conversation!,
+      setConversation({
+        ...conversation,
         messages: [
-          ...messages,
+          ...newMessages,
           {
             role: "assistant",
             content: e.message,
-            _id: idGenerator(),
+            id: IdGenerator(),
             type: "error",
           },
         ],
       });
     } finally {
       setLoading(false);
-      setReceiving(false);
+      setGenerating(false);
       setController(undefined);
     }
   }
@@ -104,29 +71,33 @@ export function useChat(options?: UseChatOptions) {
     controller?.abort();
   }
 
-  function switchConversation(id: string) {
-    setCurrentConversationId(id);
+  function clear() {
+    setConversation(createConversation());
   }
 
-  function clear() {
-    if (!currentConversation) {
-      return;
+  function archive() {
+    addHistory();
+  }
+
+  function switchConversation(id: string) {
+    const newConversation = history.get(id);
+    if (newConversation) {
+      setConversation({ ...newConversation });
+      return true;
     }
-    updateConversation(currentConversation.id, {
-      ...currentConversation,
-      messages: [],
-    });
+    return false;
   }
 
   return {
-    currentConversation,
+    conversation,
     loading,
-    receiving,
+    generating,
 
-    init,
+    setConversation,
     send,
     stop,
     clear,
+    archive,
     switchConversation,
   };
 }

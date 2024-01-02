@@ -1,58 +1,50 @@
 import { create } from "zustand";
-import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createStorage } from "./storage";
 import { Conversation } from "@/lib/types";
 import { useSettingsStore } from "./settings-store";
+import { IdGenerator } from "@/lib/utils";
 
 interface ChatState {
-  conversations: Record<string, Conversation>;
-  getConversation: (id: string) => Conversation | undefined;
-  updateConversation: (id: string, conversation: Conversation) => void;
-  addConversation: (id: string) => Conversation;
-  currentConversationId?: string;
-  setCurrentConversationId: (id: string) => void;
+  conversation: Conversation;
+  setConversation: (conversation: Conversation) => void;
+  history: Map<string, Conversation>;
+  addHistory: () => void;
+}
+
+export function createConversation(id?: string) {
+  return {
+    id: id || IdGenerator(),
+    temperature: useSettingsStore.getState().defaultTemperature,
+    model: useSettingsStore.getState().defaultModel,
+    messages: [],
+  };
 }
 
 export const useChatStore = create<ChatState>()(
   devtools(
     persist(
       immer((set, get) => ({
-        conversations: {},
-        c: () => get().conversations,
-        getConversation: (id) => get().conversations[id],
-        updateConversation: (id, conversation) => {
+        conversation: createConversation(),
+        setConversation: (conversation) => {
           set((state) => {
-            updateConversation(state, id, conversation);
+            state.conversation = conversation;
           });
         },
-        addConversation: (id) => {
-          const conversation: Conversation = {
-            id,
-            temperature: useSettingsStore.getState().defaultTemperature,
-            model: useSettingsStore.getState().defaultModel,
-            messages: [],
-          };
+        history: new Map(),
+        addHistory: () => {
+          const conversation = get().conversation;
           set((state) => {
-            updateConversation(state, id, conversation);
-          });
-          return conversation;
-        },
-        currentConversationId: undefined,
-        setCurrentConversationId: (id) => {
-          set((state) => {
-            state.currentConversationId = id;
+            state.history.set(conversation.id, conversation);
           });
         },
+        conversations: new Map(),
       })),
       {
         name: "chat",
-        storage: createJSONStorage(() => createStorage()),
+        storage: createStorage<ChatState>(),
       },
     ),
   ),
 );
-
-function updateConversation(state: ChatState, id: string, conversation: Conversation) {
-  state.conversations[id] = conversation;
-}

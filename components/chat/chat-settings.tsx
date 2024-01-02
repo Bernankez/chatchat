@@ -10,9 +10,13 @@ import Placeholder from "../ui/placeholder";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 import useSendWrap from "@/hooks/use-send-wrap";
+import { useMounted } from "@/hooks/use-mounted";
+import { useChat } from "@/hooks/use-chat";
 
 export default function ChatSettings() {
   const { t } = useTranslation("chat");
+  const mounted = useMounted();
+  const { conversation, setConversation } = useChat();
   const [open, setOpen] = useState(false);
   const [prompts, setPrompts] = useState("");
   const [temperature, setTemperature] = useState([0.6]);
@@ -22,20 +26,36 @@ export default function ChatSettings() {
     },
   });
 
+  function onToggle() {
+    if (open) {
+      // Confirm
+      setConversation({
+        ...conversation,
+        temperature: temperature[0],
+        prompts,
+      });
+    }
+  }
+
   return (
     <Collapse open={open} onOpenChange={setOpen}>
       <div>
         <div className="flex justify-between items-center gap-3">
-          <span className="w-0 flex-1 truncate">
-            {prompts}
-            <span>{temperature}</span>
-          </span>
+          {mounted ? (
+            <span className="w-0 flex-1 truncate">
+              {conversation.prompts}
+              <span>{conversation.temperature}</span>
+            </span>
+          ) : (
+            <div></div>
+          )}
           <CollapseTrigger asChild>
             <Placeholder skeleton="w-10 h-10">
               <TooltipButton
                 variant="ghost"
                 size="icon"
-                tooltip={open ? t("conversation.complete") : t("conversation.settings")}>
+                tooltip={open ? t("conversation.complete") : t("conversation.settings")}
+                onClick={onToggle}>
                 <Icon icon={open ? "lucide:check" : "lucide:settings-2"} width="1.1rem"></Icon>
               </TooltipButton>
             </Placeholder>
