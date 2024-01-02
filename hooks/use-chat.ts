@@ -12,9 +12,10 @@ export function useChat(options?: UseChatOptions) {
   const [generating, setGenerating] = useState(false);
   const { conversation, setConversation, history, addHistory } = useChatStore();
 
-  const recendPrompts = useMemo(() => {
-    return [...history.entries()].map(([_id, conversation]) => conversation.prompts!).filter((prompts) => !!prompts);
-  }, [history]);
+  const historyList = useMemo(
+    () => [...history.entries()].reverse().map(([_id, conversation]) => conversation),
+    [history],
+  );
 
   // TODO loading state push to message list
   async function send(text: string) {
@@ -96,7 +97,7 @@ export function useChat(options?: UseChatOptions) {
     conversation,
     loading,
     generating,
-    recendPrompts,
+    historyList,
 
     setConversation,
     send,

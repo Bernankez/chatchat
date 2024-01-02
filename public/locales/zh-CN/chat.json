@@ -6,7 +6,6 @@
   "wrap": "换行",
   "conversation": {
     "settings": "对话设置",
-    "complete": "完成",
     "prompts": "提示词",
     "temperature": "温度"
   }
