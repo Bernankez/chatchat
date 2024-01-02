@@ -18,7 +18,6 @@ export function createConversation(id?: string) {
   return {
     id: id || IdGenerator(),
     temperature: useSettingsStore.getState().defaultTemperature,
-    model: useSettingsStore.getState().defaultModel,
     messages: [],
   };
 }

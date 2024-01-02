@@ -18,10 +18,10 @@ interface SettingsState {
   setUseClearButton: (value: boolean) => void;
   resetInterfaceSettings: () => void;
   /** ------ OpenAI API Settings ------ */
+  model: Model;
+  setModel: (value: Model) => void;
   defaultTemperature: number;
   setDefaultTemperature: (value: number) => void;
-  defaultModel: Model;
-  setDefaultModel: (value: Model) => void;
   /** Use stream for response */
   useStream: boolean;
   setUseStream: (value: boolean) => void;
@@ -68,16 +68,16 @@ export const useSettingsStore = create<SettingsState>()(
             state.useClearButton = false;
           });
         },
+        model: "gpt-4-1106-preview",
+        setModel: (value) => {
+          set((state) => {
+            state.model = value;
+          });
+        },
         defaultTemperature: 0.6,
         setDefaultTemperature: (value) => {
           set((state) => {
             state.defaultTemperature = value;
-          });
-        },
-        defaultModel: "gpt-4-1106-preview",
-        setDefaultModel: (value) => {
-          set((state) => {
-            state.defaultModel = value;
           });
         },
         useStream: true,

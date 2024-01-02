@@ -5,7 +5,6 @@ export type Fn = (...args: any[]) => void;
 export interface Conversation {
   id: string;
   temperature: number;
-  model: Model;
   messages: Message[];
   prompts?: string;
 }
