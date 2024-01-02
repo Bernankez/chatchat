@@ -1,7 +1,7 @@
 import { handleResponse } from "@/lib/response";
 import { Message } from "@/lib/types";
 import { createConversation, useChatStore } from "@/store/chat-store";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { IdGenerator } from "@/lib/utils";
 
 export interface UseChatOptions {}
@@ -11,6 +11,10 @@ export function useChat(options?: UseChatOptions) {
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
   const { conversation, setConversation, history, addHistory } = useChatStore();
+
+  const recendPrompts = useMemo(() => {
+    return [...history.entries()].map(([_id, conversation]) => conversation.prompts!).filter((prompts) => !!prompts);
+  }, [history]);
 
   // TODO loading state push to message list
   async function send(text: string) {
@@ -92,6 +96,7 @@ export function useChat(options?: UseChatOptions) {
     conversation,
     loading,
     generating,
+    recendPrompts,
 
     setConversation,
     send,

@@ -15,8 +15,7 @@ import { useChat } from "@/hooks/use-chat";
 
 export default function ChatSettings() {
   const { t } = useTranslation("chat");
-  const mounted = useMounted();
-  const { conversation, setConversation } = useChat();
+  const { conversation, recendPrompts, setConversation } = useChat();
   const [open, setOpen] = useState(false);
   const [prompts, setPrompts] = useState("");
   const [temperature, setTemperature] = useState([0.6]);
@@ -41,14 +40,12 @@ export default function ChatSettings() {
     <Collapse open={open} onOpenChange={setOpen}>
       <div>
         <div className="flex justify-between items-center gap-3">
-          {mounted ? (
+          <Placeholder skeleton="w-full">
             <span className="w-0 flex-1 truncate">
               {conversation.prompts}
               <span>{conversation.temperature}</span>
             </span>
-          ) : (
-            <div></div>
-          )}
+          </Placeholder>
           <CollapseTrigger asChild>
             <Placeholder skeleton="w-10 h-10">
               <TooltipButton

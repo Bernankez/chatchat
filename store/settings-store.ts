@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { createStorage } from "./storage";
+import { createJSONStorage, createStorage } from "./storage";
 import { Model } from "@/lib/types";
 
 interface SettingsState {
@@ -89,7 +89,7 @@ export const useSettingsStore = create<SettingsState>()(
       })),
       {
         name: "settings",
-        storage: createStorage(),
+        storage: createJSONStorage(() => createStorage()),
         // Omit key from state
         partialize: (state) =>
           Object.fromEntries(Object.entries(state).filter(([key]) => !["settingsPanelOpen"].includes(key))),

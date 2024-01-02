@@ -1,5 +1,7 @@
 export type Role = "system" | "user" | "assistant";
 
+export type Fn = (...args: any[]) => void;
+
 export interface Conversation {
   id: string;
   temperature: number;

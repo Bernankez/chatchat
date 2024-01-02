@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { createStorage } from "./storage";
+import { enableMapSet } from "immer";
+import { createJSONStorage, createStorage } from "./storage";
 import { Conversation } from "@/lib/types";
 import { useSettingsStore } from "./settings-store";
 import { IdGenerator } from "@/lib/utils";
@@ -22,6 +23,7 @@ export function createConversation(id?: string) {
   };
 }
 
+enableMapSet();
 export const useChatStore = create<ChatState>()(
   devtools(
     persist(
@@ -43,7 +45,7 @@ export const useChatStore = create<ChatState>()(
       })),
       {
         name: "chat",
-        storage: createStorage<ChatState>(),
+        storage: createJSONStorage(() => createStorage()),
       },
     ),
   ),
