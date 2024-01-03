@@ -1,5 +1,5 @@
 import { modelList } from "@/lib/const";
-import { Button } from "../ui/button";
+import { Button, ButtonProps } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,17 +7,18 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
-export type ModelSelectProps<T extends string> = {
+export interface ModelSelectProps<T extends string> extends ButtonProps {
   value: T;
   onValueChange: (value: T) => void;
-};
+}
 
 export default function ModelSelect<T extends string = string>(props: ModelSelectProps<T>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="text-muted-foreground">
+        <Button variant="ghost" className={cn("text-muted-foreground", props.className)}>
           {props.value}
         </Button>
       </DropdownMenuTrigger>

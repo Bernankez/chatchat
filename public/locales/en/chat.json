@@ -6,7 +6,7 @@
   "wrap": "Wrap",
   "conversation": {
     "settings": "Conversation Settings",
-    "complete": "Complete",
+    "model": "Model",
     "prompts": "Prompts",
     "temperature": "Temperature"
   }

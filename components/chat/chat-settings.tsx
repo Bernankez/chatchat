@@ -12,6 +12,7 @@ import { Slider } from "../ui/slider";
 import useSendWrap from "@/hooks/use-send-wrap";
 import { useChat } from "@/hooks/use-chat";
 import { Skeleton } from "../ui/skeleton";
+import ModelSelect from "../common/model-select";
 
 export default function ChatSettings() {
   const { t } = useTranslation(["chat", "ui"]);
@@ -21,12 +22,12 @@ export default function ChatSettings() {
   const [temperature, setTemperature] = useState([0.6]);
   const textareaProps = useSendWrap({
     send() {
-      setOpen(false);
+      onConfirm(false);
     },
   });
 
-  function onConfirm() {
-    if (open) {
+  function onConfirm(open: boolean) {
+    if (!open) {
       // Confirm
       setConversation({
         ...conversation,
@@ -37,6 +38,7 @@ export default function ChatSettings() {
       setPrompts(conversation.prompts || "");
       setTemperature([conversation.temperature]);
     }
+    setOpen(open);
   }
 
   useEffect(() => {
@@ -55,7 +57,10 @@ export default function ChatSettings() {
         <div>
           <div className="flex justify-between items-center gap-3">
             <div className="w-0 flex-1 flex gap-2">
-              <Icon icon="lucide:box"></Icon>
+              <div className="shrink-0 flex items-center gap-2 p-1 rounded-sm cursor-default">
+                <Icon icon="lucide:box" className="shrink-0"></Icon>
+                {conversation.model}
+              </div>
               {conversation.prompts && (
                 <div className="truncate flex items-center gap-2 p-1 rounded-sm cursor-default">
                   <Icon icon="lucide:messages-square" className="shrink-0"></Icon>
@@ -81,7 +86,7 @@ export default function ChatSettings() {
                 variant="ghost"
                 size="icon"
                 tooltip={open ? t("complete", { ns: "ui" }) : t("conversation.settings")}
-                onClick={onConfirm}>
+                onClick={() => onConfirm(!open)}>
                 <Icon icon={open ? "lucide:check" : "lucide:settings-2"} width="1.1rem"></Icon>
               </TooltipButton>
             </CollapseTrigger>
@@ -89,15 +94,22 @@ export default function ChatSettings() {
         </div>
         <CollapseContent>
           <div className="flex flex-col gap-3 py-3 pb-2 px-2">
-            <Label>
-              {t("conversation.prompts")}
+            <div>
+              <Label>{t("conversation.model")}</Label>
+              <ModelSelect
+                className="ml-3 w-fit"
+                value={conversation.model}
+                onValueChange={(model) => setConversation({ ...conversation, model })}></ModelSelect>
+            </div>
+            <div>
+              <Label>{t("conversation.prompts")}</Label>
               <Textarea
                 className="mt-3"
                 value={prompts}
                 onInput={(e) => setPrompts(e.currentTarget.value)}
                 {...textareaProps}></Textarea>
-            </Label>
-            {historyList.filter((con) => !!con.prompts).length && (
+            </div>
+            {historyList.filter((con) => !!con.prompts).length > 0 && (
               <div className="flex">
                 {historyList
                   .filter((con) => !!con.prompts)
@@ -112,13 +124,15 @@ export default function ChatSettings() {
                   ))}
               </div>
             )}
-            <Label>
-              <div className="flex justify-between items-center">
-                <span>{t("conversation.temperature")}</span>
-                <span>{temperature}</span>
-              </div>
+            <div>
+              <Label>
+                <div className="flex justify-between items-center">
+                  <span>{t("conversation.temperature")}</span>
+                  <span>{temperature}</span>
+                </div>
+              </Label>
               <Slider className="mt-3" value={temperature} onValueChange={setTemperature} max={1} step={0.1}></Slider>
-            </Label>
+            </div>
           </div>
         </CollapseContent>
       </Collapse>
