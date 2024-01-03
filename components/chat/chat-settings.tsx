@@ -55,6 +55,7 @@ export default function ChatSettings() {
         <div>
           <div className="flex justify-between items-center gap-3">
             <div className="w-0 flex-1 flex gap-2">
+              <Icon icon="lucide:box"></Icon>
               {conversation.prompts && (
                 <div className="truncate flex items-center gap-2 p-1 rounded-sm cursor-default">
                   <Icon icon="lucide:messages-square" className="shrink-0"></Icon>

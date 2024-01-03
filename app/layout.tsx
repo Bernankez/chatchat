@@ -48,9 +48,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <DevToolsProvider>
               {children}
+              {isDev && <DevTools />}
               <Toaster />
             </DevToolsProvider>
-            {isDev && <DevTools />}
           </ThemeProvider>
         </body>
       </html>

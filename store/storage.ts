@@ -5,24 +5,24 @@ import superjson from "superjson";
 let globalStore: UseStore | undefined;
 
 export function createStore() {
-  return _createStore("chatchat", "store");
+  if (!globalStore) {
+    globalStore = _createStore("chatchat", "store");
+  }
+  return globalStore;
 }
 
 export function createStorage() {
   const store = createStore();
-  if (!globalStore) {
-    globalStore = store;
-  }
 
   const IndexedDBStorage: StateStorage = {
     getItem: async (name) => {
-      return (await get(name, globalStore)) || null;
+      return (await get(name, store)) || null;
     },
     setItem: async (name, value) => {
-      await set(name, value, globalStore);
+      await set(name, value, store);
     },
     removeItem: async (name) => {
-      await del(name, globalStore);
+      await del(name, store);
     },
   };
   return IndexedDBStorage;

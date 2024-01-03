@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 export function useResizeObserver(
-  el: HTMLElement | undefined | null,
+  el: Element | undefined | null,
   cb: ResizeObserverCallback,
   options?: ResizeObserverOptions,
 ) {
