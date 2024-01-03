@@ -42,7 +42,6 @@ export function usePosition(target: RefObject<HTMLElement>) {
     const [_x, _y, side] = sticked;
     setXY({ x: _x, y: _y });
     setSide(side);
-    console.log({ x, y, side });
     const positioned = transformPosition(...sticked);
     const percented = transformPercent(positioned);
     return percented;
