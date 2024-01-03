@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useDevStore } from "@/store/dev-store";
 import { Switch } from "../ui/switch";
@@ -11,10 +11,12 @@ import { createStore } from "@/store/storage";
 import { clear } from "idb-keyval";
 import { toast } from "sonner";
 import clsx from "clsx";
+import { useRewriteConsole } from "./use-rewrite-console";
 
 export default function DevTools() {
+  useRewriteConsole();
   const [open, setOpen] = useState(false);
-  const { mounted, setMounted } = useDevStore();
+  const { mounted, setMounted, log } = useDevStore();
   const divRef = useRef<HTMLDivElement>(null);
   const { isDragging, side, ...position } = usePosition(divRef);
 
@@ -57,6 +59,12 @@ export default function DevTools() {
           <Button variant="destructive" size="sm" onClick={deleteDatabase}>
             Delete
           </Button>
+        </div>
+        <div>
+          <Label>Console</Label>
+          {log.map((l, i) => (
+            <div key={i}>{JSON.stringify(l.content)}</div>
+          ))}
         </div>
       </PopoverContent>
     </Popover>
