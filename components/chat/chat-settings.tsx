@@ -13,12 +13,14 @@ import useSendWrap from "@/hooks/use-send-wrap";
 import { useChat } from "@/hooks/use-chat";
 import { Skeleton } from "../ui/skeleton";
 import ModelSelect from "../common/model-select";
+import { Model } from "@/lib/types";
 
 export default function ChatSettings() {
   const { t } = useTranslation(["chat", "ui"]);
   const { conversation, historyList, setConversation } = useChat();
   const [open, setOpen] = useState(false);
   const [prompts, setPrompts] = useState("");
+  const [model, setModel] = useState<Model>(conversation.model);
   const [temperature, setTemperature] = useState([0.6]);
   const textareaProps = useSendWrap({
     send() {
@@ -33,10 +35,12 @@ export default function ChatSettings() {
         ...conversation,
         temperature: temperature[0],
         prompts,
+        model,
       });
     } else {
       setPrompts(conversation.prompts || "");
       setTemperature([conversation.temperature]);
+      setModel(conversation.model);
     }
     setOpen(open);
   }
@@ -48,14 +52,15 @@ export default function ChatSettings() {
   return (
     <Placeholder
       skeleton={
-        <div className="flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           <Skeleton className="w-52 h-10"></Skeleton>
           <Skeleton className="w-10 h-10"></Skeleton>
         </div>
       }>
       <Collapse open={open} onOpenChange={setOpen}>
+        {/* this div is necessary to avoid shaking */}
         <div>
-          <div className="flex justify-between items-center gap-3">
+          <div className="mt-2 flex justify-between items-center gap-3 text-sm">
             <div className="w-0 flex-1 flex gap-2">
               <div className="shrink-0 flex items-center gap-2 p-1 rounded-sm cursor-default">
                 <Icon icon="lucide:box" className="shrink-0"></Icon>
@@ -96,10 +101,7 @@ export default function ChatSettings() {
           <div className="flex flex-col gap-3 py-3 pb-2 px-2">
             <div>
               <Label>{t("conversation.model")}</Label>
-              <ModelSelect
-                className="ml-3 w-fit"
-                value={conversation.model}
-                onValueChange={(model) => setConversation({ ...conversation, model })}></ModelSelect>
+              <ModelSelect className="ml-3 w-fit" value={model} onValueChange={setModel}></ModelSelect>
             </div>
             <div>
               <Label>{t("conversation.prompts")}</Label>
