@@ -22,7 +22,7 @@ export default function Header() {
         </div>
       </div>
       <div className="flex items-end gap-5">
-        <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-30% to-orange-300 bg-clip-text text-transparent cursor-default">
+        <div className="mt-2 font-bold text-4xl bg-gradient-to-r from-0% from-orange-500 to-100% to-orange-300 bg-clip-text text-transparent cursor-default">
           chatchat
         </div>
         <div className="text-muted-foreground shrink-0 cursor-default">{t("subTitle")}</div>
