@@ -14,9 +14,11 @@ import { useChat } from "@/hooks/use-chat";
 import { Skeleton } from "../ui/skeleton";
 import ModelSelect from "../common/model-select";
 import { Model } from "@/lib/types";
+import { useChatStore } from "@/store/chat-store";
 
 export default function ChatSettings() {
   const { t } = useTranslation(["chat", "ui"]);
+  const { setIsEditing } = useChatStore();
   const { conversation, historyList, setConversation } = useChat();
   const [open, setOpen] = useState(false);
   const [prompts, setPrompts] = useState("");
@@ -27,6 +29,10 @@ export default function ChatSettings() {
       onConfirm(false);
     },
   });
+
+  useEffect(() => {
+    setIsEditing(open);
+  }, [open]);
 
   function onConfirm(open: boolean) {
     if (!open) {
@@ -48,6 +54,11 @@ export default function ChatSettings() {
   useEffect(() => {
     setPrompts(conversation.prompts || "");
   }, [conversation]);
+
+  function adjustInput(el: HTMLTextAreaElement) {
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }
 
   return (
     <Placeholder
@@ -106,9 +117,13 @@ export default function ChatSettings() {
             <div>
               <Label>{t("conversation.prompts")}</Label>
               <Textarea
-                className="mt-3"
+                className="resize-none mt-3 outline outline-1 outline-border border-none min-h-[5rem] max-h-[7.5rem]"
+                rows={3}
                 value={prompts}
-                onInput={(e) => setPrompts(e.currentTarget.value)}
+                onInput={(e) => {
+                  adjustInput(e.currentTarget);
+                  setPrompts(e.currentTarget.value);
+                }}
                 {...textareaProps}></Textarea>
             </div>
             {historyList.filter((con) => !!con.prompts).length > 0 && (

@@ -42,9 +42,6 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   });
   const { onKeyDown: sendWrapKeyDown } = useSendWrap({
     send: sendMessage,
-    wrap: () => {
-      console.log("wrap");
-    },
   });
 
   useClickAway((e) => {

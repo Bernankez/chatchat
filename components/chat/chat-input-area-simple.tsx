@@ -35,9 +35,6 @@ export default function ChatInputAreaSimple(props: ChatInputAreaSimpleProps) {
   });
   const { onKeyDown: sendWrapKeyDown } = useSendWrap({
     send: sendMessage,
-    wrap: () => {
-      console.log("wrap");
-    },
   });
 
   function adjustInput(el: HTMLTextAreaElement) {

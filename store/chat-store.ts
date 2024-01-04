@@ -12,6 +12,10 @@ interface ChatState {
   setConversation: (conversation: Conversation) => void;
   history: Map<string, Conversation>;
   addHistory: () => void;
+  isSending: boolean;
+  setIsSending: (value: boolean) => void;
+  isEditing: boolean;
+  setIsEditing: (value: boolean) => void;
 }
 
 export function createConversation(id?: string) {
@@ -42,10 +46,25 @@ export const useChatStore = create<ChatState>()(
           });
         },
         conversations: new Map(),
+        isSending: false,
+        setIsSending: (value) => {
+          set((state) => {
+            state.isSending = value;
+          });
+        },
+        isEditing: false,
+        setIsEditing: (value) => {
+          set((state) => {
+            state.isEditing = value;
+          });
+        },
       })),
       {
         name: "chat",
         storage: createJSONStorage(() => createStorage()),
+        // Omit key from state
+        partialize: (state) =>
+          Object.fromEntries(Object.entries(state).filter(([key]) => !["isSending", "isEditing"].includes(key))),
       },
     ),
   ),
