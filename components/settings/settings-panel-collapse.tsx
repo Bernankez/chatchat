@@ -19,9 +19,9 @@ export interface SettingsPanelCollapseProps {
 
 const SettingsPanelCollapse = forwardRef<HTMLDivElement, SettingsPanelCollapseProps>(
   function SettingsPanelCollapse(props, ref) {
-    const { open, onOpenChange, icon, title, children, ...divProps } = props;
+    const { open, onOpenChange, icon, title, children, defaultValue, ...divProps } = props;
     const [_open, _setOpen] = useControllableValue(props, {
-      defaultValue: props.defaultValue ?? false,
+      defaultValue: defaultValue ?? false,
       valuePropName: "open",
       trigger: "onOpenChange",
     });
