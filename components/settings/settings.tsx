@@ -14,6 +14,7 @@ export default function Settings() {
   const { t } = useTranslation("settings");
 
   return (
+    // TODO use same SheetContent instance
     <Placeholder skeleton="w-10 h-10">
       <Sheet modal={false} open={settingsPanelOpen} onOpenChange={setSettingsPanelOpen}>
         <Toggle asChild pressed={settingsPanelOpen}>

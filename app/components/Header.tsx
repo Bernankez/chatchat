@@ -5,6 +5,7 @@ import Placeholder from "@/components/ui/placeholder";
 import ChatSettings from "@/components/chat/chat-settings";
 import WideScreen from "@/components/settings/wide-screen";
 import { useTranslation } from "react-i18next";
+import Language from "@/components/settings/language";
 
 export default function Header() {
   const { t } = useTranslation("app");
@@ -18,6 +19,7 @@ export default function Header() {
         <div className="flex gap-3">
           <Settings></Settings>
           <WideScreen></WideScreen>
+          <Language></Language>
           <ThemeToggle></ThemeToggle>
         </div>
       </div>

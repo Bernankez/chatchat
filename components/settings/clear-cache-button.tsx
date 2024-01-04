@@ -8,16 +8,20 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { Button } from "../ui/button";
+import { Button, ButtonProps } from "../ui/button";
 import { createStore } from "@/store/storage";
 import { clear } from "idb-keyval";
 import { toast } from "sonner";
+import { forwardRef } from "react";
 
-export interface ClearCacheButtonProps {
+export interface ClearCacheButtonProps extends ButtonProps {
   onConfirm?: () => void;
 }
 
-export default function ClearCacheButton({ onConfirm }: ClearCacheButtonProps) {
+const ClearCacheButton = forwardRef<HTMLButtonElement, ClearCacheButtonProps>(function ClearCacheButton(
+  { onConfirm, ...props },
+  ref,
+) {
   const { t } = useTranslation(["settings", "ui"]);
 
   const storage = createStore();
@@ -39,7 +43,9 @@ export default function ClearCacheButton({ onConfirm }: ClearCacheButtonProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">{t("panel.clearAllCache")}</Button>
+        <Button {...props} ref={ref}>
+          {t("panel.clearAllCache")}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>{t("panel.clearAllCacheTip")}</AlertDialogHeader>
@@ -50,4 +56,6 @@ export default function ClearCacheButton({ onConfirm }: ClearCacheButtonProps) {
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+});
+
+export default ClearCacheButton;

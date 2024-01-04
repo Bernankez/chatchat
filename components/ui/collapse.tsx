@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useControllableValue } from "ahooks";
-import { Dispatch, SetStateAction, createContext, useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, createContext, forwardRef, useEffect, useMemo, useState } from "react";
 
 export interface CollapseProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -18,7 +18,7 @@ export const CollapseContext = createContext<CollapseContextProps>({
   setOpen: () => {},
 });
 
-export default function Collapse({ children, className, ...props }: CollapseProps) {
+const Collapse = forwardRef<HTMLDivElement, CollapseProps>(function Collapse({ children, className, ...props }, ref) {
   const [open, setOpen] = useControllableValue(props, {
     defaultValue: false,
     valuePropName: "open",
@@ -28,6 +28,7 @@ export default function Collapse({ children, className, ...props }: CollapseProp
   return (
     <CollapseContext.Provider value={{ open, setOpen }}>
       <div
+        ref={ref}
         className={`${cn(
           className,
           "grid overflow-hidden rounded-sm",
@@ -38,4 +39,6 @@ export default function Collapse({ children, className, ...props }: CollapseProp
       </div>
     </CollapseContext.Provider>
   );
-}
+});
+
+export default Collapse;
