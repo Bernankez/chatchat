@@ -61,6 +61,7 @@ export default function DevTools() {
           </Button>
         </div>
         <div>
+          {/* TODO toggle console rewrite */}
           <Label>Console</Label>
           {log.map((l, i) => (
             <div key={i}>{JSON.stringify(l.content)}</div>
