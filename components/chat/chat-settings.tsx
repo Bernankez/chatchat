@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { Textarea } from "../ui/textarea";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Collapse from "../ui/collapse";
 import CollapseTrigger from "../ui/collapse-trigger";
 import CollapseContent from "../ui/collapse-content";
@@ -34,13 +34,25 @@ export default function ChatSettings() {
     setIsEditing(open);
   }, [open]);
 
+  const promptList = useMemo(() => {
+    const res = historyList.filter((con) => !!con.prompts);
+    const set = new Set<string>();
+    return res.filter((con) => {
+      if (set.has(con.prompts!)) {
+        return false;
+      }
+      set.add(con.prompts!);
+      return true;
+    });
+  }, [historyList]);
+
   function onConfirm(open: boolean) {
     if (!open) {
       // Confirm
       setConversation({
         ...conversation,
         temperature: temperature[0],
-        prompts,
+        prompts: prompts.trim(),
         model,
       });
     } else {
@@ -126,19 +138,16 @@ export default function ChatSettings() {
                 }}
                 {...textareaProps}></Textarea>
             </div>
-            {historyList.filter((con) => !!con.prompts).length > 0 && (
+            {promptList.length > 0 && (
               <div className="flex">
-                {historyList
-                  .filter((con) => !!con.prompts)
-                  .slice(0, 5)
-                  .map((con) => (
-                    <div
-                      key={con.id}
-                      className="w-full text-sm rounded-sm py-2 px-3 hover:bg-muted transition cursor-default"
-                      onClick={() => setPrompts(con.prompts!)}>
-                      <div className="line-clamp-4">{con.prompts}</div>
-                    </div>
-                  ))}
+                {promptList.slice(0, 5).map((con) => (
+                  <div
+                    key={con.id}
+                    className="w-full text-sm rounded-sm py-2 px-3 hover:bg-muted transition cursor-default"
+                    onClick={() => setPrompts(con.prompts!)}>
+                    <div className="line-clamp-4">{con.prompts}</div>
+                  </div>
+                ))}
               </div>
             )}
             <div>
