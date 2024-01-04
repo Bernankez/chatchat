@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useDevStore } from "@/store/dev-store";
 import { Switch } from "../ui/switch";
@@ -18,6 +18,7 @@ export default function DevTools() {
   const [open, setOpen] = useState(false);
   const { mounted, setMounted, log } = useDevStore();
   const divRef = useRef<HTMLDivElement>(null);
+  // TODO fix position after resizing
   const { isDragging, side, ...position } = usePosition(divRef);
 
   function deleteDatabase() {

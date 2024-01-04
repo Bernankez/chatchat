@@ -13,13 +13,18 @@ import { createStore } from "@/store/storage";
 import { clear } from "idb-keyval";
 import { toast } from "sonner";
 
-export default function ClearCacheButton() {
+export interface ClearCacheButtonProps {
+  onConfirm?: () => void;
+}
+
+export default function ClearCacheButton({ onConfirm }: ClearCacheButtonProps) {
   const { t } = useTranslation(["settings", "ui"]);
 
   const storage = createStore();
 
   function clearAllCache() {
     clear(storage);
+    onConfirm?.();
     toast(t("panel.clearAllCacheSucceed"), {
       duration: Infinity,
       action: {

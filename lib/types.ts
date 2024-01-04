@@ -7,7 +7,7 @@ export interface Conversation {
   temperature: number;
   model: Model;
   messages: Message[];
-  prompts?: string;
+  prompts: string;
 }
 
 export interface Message {

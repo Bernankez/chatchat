@@ -3,6 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, createStorage } from "./storage";
 import { Model } from "@/lib/types";
+import { modelList } from "@/lib/const";
 
 interface SettingsState {
   /** ------ Interface Settings ------ */
@@ -18,13 +19,17 @@ interface SettingsState {
   setUseClearButton: (value: boolean) => void;
   resetInterfaceSettings: () => void;
   /** ------ OpenAI API Settings ------ */
-  defaultTemperature: number;
-  setDefaultTemperature: (value: number) => void;
-  defaultModel: Model;
-  setDefaultModel: (value: Model) => void;
   /** Use stream for response */
   useStream: boolean;
   setUseStream: (value: boolean) => void;
+  /** ------ Default Settings ------ */
+  defaultModel: Model;
+  setDefaultModel: (value: Model) => void;
+  defaultPrompts: string;
+  setDefaultPrompts: (value: string) => void;
+  defaultTemperature: number;
+  setDefaultTemperature: (value: number) => void;
+  resetDefaultSettings: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -68,22 +73,35 @@ export const useSettingsStore = create<SettingsState>()(
             state.useClearButton = false;
           });
         },
+        useStream: true,
+        setUseStream: (value) => {
+          set((state) => {
+            state.useStream = value;
+          });
+        },
+        defaultModel: modelList[0],
+        setDefaultModel: (value) => {
+          set((state) => {
+            state.defaultModel = value;
+          });
+        },
+        defaultPrompts: "",
+        setDefaultPrompts: (value) => {
+          set((state) => {
+            state.defaultPrompts = value;
+          });
+        },
         defaultTemperature: 0.6,
         setDefaultTemperature: (value) => {
           set((state) => {
             state.defaultTemperature = value;
           });
         },
-        defaultModel: "gpt-4-1106-preview",
-        setDefaultModel: (value) => {
+        resetDefaultSettings: () => {
           set((state) => {
-            state.defaultModel = value;
-          });
-        },
-        useStream: true,
-        setUseStream: (value) => {
-          set((state) => {
-            state.useStream = value;
+            state.defaultModel = modelList[0];
+            state.defaultPrompts = "";
+            state.defaultTemperature = 0.6;
           });
         },
       })),

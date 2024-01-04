@@ -143,7 +143,7 @@ export default function ChatSettings() {
                 {promptList.slice(0, 5).map((con) => (
                   <div
                     key={con.id}
-                    className="w-full text-sm rounded-sm py-2 px-3 hover:bg-muted transition cursor-default"
+                    className="w-full text-sm rounded-sm py-2 px-3 text-muted-foreground hover:text-foreground transition cursor-default"
                     onClick={() => setPrompts(con.prompts!)}>
                     <div className="line-clamp-4">{con.prompts}</div>
                   </div>
