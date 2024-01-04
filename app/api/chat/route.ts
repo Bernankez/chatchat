@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   const { t } = await getServerTranslations("openai");
   const body = await request.json();
   const { apiKey, baseUrl } = resolveArgs(body);
-  const { messages, model } = body;
+  const { messages, model, temperature } = body;
 
   if (!messages) {
     return response(
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     body: JSON.stringify({
       model,
       messages,
-      temperature: 0.6,
+      temperature,
       stream: true,
     }),
   };

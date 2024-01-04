@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import clsx from "clsx";
 
 export interface SettingsPanelCollapseProps {
+  defaultValue?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   icon?: string | React.ReactNode;
@@ -20,7 +21,7 @@ const SettingsPanelCollapse = forwardRef<HTMLDivElement, SettingsPanelCollapsePr
   function SettingsPanelCollapse(props, ref) {
     const { open, onOpenChange, icon, title, children, ...divProps } = props;
     const [_open, _setOpen] = useControllableValue(props, {
-      defaultValue: false,
+      defaultValue: props.defaultValue ?? false,
       valuePropName: "open",
       trigger: "onOpenChange",
     });

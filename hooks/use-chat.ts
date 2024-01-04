@@ -40,6 +40,7 @@ export function useChat(options?: UseChatOptions) {
         body: JSON.stringify({
           model: conversation.model,
           messages: messagesWithPrompt,
+          temperature: conversation.temperature,
         }),
         signal: abortCtrl.signal,
       });

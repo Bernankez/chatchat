@@ -12,6 +12,7 @@ import { Model } from "@/lib/types";
 import { Textarea } from "../ui/textarea";
 import { Slider } from "../ui/slider";
 import SettingsPanelCollapse from "./settings-panel-collapse";
+import { Separator } from "../ui/separator";
 
 export interface SettingsPanelProps {
   style?: CSSProperties;
@@ -118,10 +119,13 @@ export default function SettingsPanel(props: SettingsPanelProps) {
           </div>
         </Label>
       </SettingsPanelCollapse>
-      <SettingsPanelCollapse
-        icon="lucide:app-window"
-        title={t("panel.interfaceSettings")}
-        className="grid gap-4 py-4 pr-1">
+      <div className="flex flex-col justify-end gap-2">
+        <Button type="submit" onClick={save}>
+          {t("panel.saveChanges")}
+        </Button>
+      </div>
+      <Separator className="my-2"></Separator>
+      <div className="grid gap-4 pr-1">
         <Label className="flex items-center justify-between">
           <div>
             {t("panel.swapSendWrap")}
@@ -137,11 +141,6 @@ export default function SettingsPanel(props: SettingsPanelProps) {
           <div>{t("panel.useClearButton")}</div>
           <Switch checked={useClearButton} onCheckedChange={setUseClearButton}></Switch>
         </Label>
-      </SettingsPanelCollapse>
-      <div className="flex flex-col-reverse justify-end gap-2">
-        <Button type="submit" onClick={save} size="lg">
-          {t("panel.saveChanges")}
-        </Button>
       </div>
       <div className="flex justify-end gap-2">
         <Button variant="ghost" onClick={resetSettings} className="w-full">
