@@ -12,11 +12,12 @@ import { clear } from "idb-keyval";
 import { toast } from "sonner";
 import clsx from "clsx";
 import { useRewriteConsole } from "./use-rewrite-console";
+import { Separator } from "../ui/separator";
 
 export default function DevTools() {
-  useRewriteConsole();
   const [open, setOpen] = useState(false);
-  const { mounted, setMounted, log } = useDevStore();
+  const { mounted, setMounted, log, rewriteConsole, setRewriteConsole } = useDevStore();
+  useRewriteConsole(rewriteConsole);
   const divRef = useRef<HTMLDivElement>(null);
   // TODO fix position after resizing
   const { isDragging, side, ...position } = usePosition(divRef);
@@ -36,8 +37,83 @@ export default function DevTools() {
     });
   }
 
+  function format(...params: string[]) {
+    const [f, ...args] = params;
+    let i = 0;
+    const len = args.length;
+    return f.replace(/%[sdjf%]/g, (x) => {
+      if (x === "%%") {
+        return "%";
+      }
+      if (i >= len) {
+        return x;
+      }
+      switch (x) {
+        case "%s":
+          return String(args[i++]);
+        case "%d":
+          return Number(args[i++]).toFixed(0);
+        case "%f":
+          return parseFloat(args[i++]).toString();
+        case "%j":
+          try {
+            return JSON.stringify(args[i++]);
+          } catch (err) {
+            return "[Circular]";
+          }
+        default:
+          return x;
+      }
+    });
+  }
+
+  function handleLog(content: any[]) {
+    console.trace(content);
+    try {
+      if (content.length === 1) {
+        const res = content[0];
+        if (res instanceof Error) {
+          return (
+            <>
+              <div>{res.message}</div>
+              <div>{JSON.stringify(res)}</div>
+            </>
+          );
+        } else if (typeof res === "string") {
+          return <div>{res.trim()}</div>;
+        }
+      } else if (content.length > 0) {
+        let strArr = true;
+        for (const c in content) {
+          if (typeof c !== "string") {
+            strArr = false;
+            break;
+          }
+        }
+        if (strArr) {
+          return <div>{format(...content)}</div>;
+        }
+        return (
+          <div className="flex flex-col gap-1">
+            {content.map((c, i) => (
+              <div key={i}>{handleLog([c])}</div>
+            ))}
+          </div>
+        );
+      }
+      return <div>{JSON.stringify(content)}</div>;
+    } catch (e: any) {
+      return (
+        <div className="bg-red-50 text-red-500">
+          [chatchat DevTools] Internal Error
+          <div>{e.message}</div>
+        </div>
+      );
+    }
+  }
+
   return (
-    <Popover open={open} onOpenChange={setOpen} modal>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <div
           ref={divRef}
@@ -49,7 +125,7 @@ export default function DevTools() {
           <Icon icon="fluent-emoji:ghost" width="2rem" className="pointer-events-none"></Icon>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-3">
+      <PopoverContent className="flex flex-col gap-3 w-[50rem]">
         <div className="font-bold text-xl">chatchat DevTools</div>
         <div className="flex items-center justify-between">
           <Label>Toggle Mounted</Label>
@@ -61,13 +137,30 @@ export default function DevTools() {
             Delete
           </Button>
         </div>
-        <div>
-          {/* TODO toggle console rewrite */}
-          <Label>Console</Label>
-          {log.map((l, i) => (
-            <div key={i}>{JSON.stringify(l.content)}</div>
-          ))}
+        <div className="flex items-center justify-between">
+          <Label>Rewrite Console</Label>
+          <Switch checked={rewriteConsole} onCheckedChange={setRewriteConsole}></Switch>
         </div>
+        {rewriteConsole ? (
+          <pre className="p-3 bg-muted rounded-sm">
+            <div>Console</div>
+            <div className="max-h-[20rem] overflow-y-auto">
+              {log.map((l, i) => (
+                <>
+                  <Separator key={i}></Separator>
+                  <div
+                    className={clsx("break-word whitespace-pre-wrap", [
+                      l.type === "error" ? "bg-red-50 text-red-500" : "",
+                      l.type === "warn" ? "bg-yellow-50 text-yellow-500" : "",
+                      l.type === "info" ? "bg-blue-50 text-blue-500" : "",
+                    ])}>
+                    {handleLog(l.content)}
+                  </div>
+                </>
+              ))}
+            </div>
+          </pre>
+        ) : null}
       </PopoverContent>
     </Popover>
   );
