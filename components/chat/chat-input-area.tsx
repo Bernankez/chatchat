@@ -65,6 +65,9 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   }, [lng]);
 
   function insertEmoji(emoji: string) {
+    if (!textareaRef.current) {
+      return;
+    }
     if (!clickOutside) {
       textareaRef.current?.setRangeText(
         emoji,
@@ -72,19 +75,21 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
         textareaRef.current.selectionEnd,
         "end",
       );
-      const inputEvent = new Event("input", {
-        bubbles: true,
-        cancelable: true,
-      });
-      const changeEvent = new Event("change", {
-        bubbles: true,
-        cancelable: true,
-      });
-      textareaRef.current?.dispatchEvent(inputEvent);
-      textareaRef.current?.dispatchEvent(changeEvent);
-      textareaRef.current?.blur();
-      textareaRef.current?.focus();
+    } else {
+      textareaRef.current.value += emoji;
     }
+    const inputEvent = new Event("input", {
+      bubbles: true,
+      cancelable: true,
+    });
+    const changeEvent = new Event("change", {
+      bubbles: true,
+      cancelable: true,
+    });
+    textareaRef.current?.dispatchEvent(inputEvent);
+    textareaRef.current?.dispatchEvent(changeEvent);
+    textareaRef.current?.blur();
+    textareaRef.current?.focus();
   }
 
   function sendMessage() {
@@ -102,7 +107,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
           <PopoverTrigger asChild>
             <Placeholder skeleton="w-10 h-10">
               <TooltipButton ref={emojiButtonRef} variant="ghost" size="icon" tooltip="Emoji">
-                <Icon icon="gravity-ui:face-fun" width="1.5rem"></Icon>
+                <Icon icon="lucide:smile-plus" width="1.5rem"></Icon>
               </TooltipButton>
             </Placeholder>
           </PopoverTrigger>
@@ -136,11 +141,11 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
       <div className="px-6 flex items-center gap-3 justify-end">
         <ChatSendWrap></ChatSendWrap>
         <TooltipButton variant="secondary" size="icon" tooltip={t("send")} onClick={sendMessage}>
-          <Icon icon="gravity-ui:circle" width="1.4rem" color="#c14344"></Icon>
+          <Icon icon="lucide:circle" width="1.4rem" color="#c14344"></Icon>
         </TooltipButton>
         {useClearButton ? (
           <TooltipButton variant="secondary" size="icon" tooltip={t("clear")} onClick={clear}>
-            <Icon icon="gravity-ui:trash-bin" width="1.4rem"></Icon>
+            <Icon icon="lucide:trash-2" width="1.4rem"></Icon>
           </TooltipButton>
         ) : (
           <TooltipButton
@@ -151,7 +156,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
               archive();
               clear();
             }}>
-            <Icon icon="gravity-ui:archive" width="1.4rem"></Icon>
+            <Icon icon="lucide:archive" width="1.4rem"></Icon>
           </TooltipButton>
         )}
       </div>
