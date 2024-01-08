@@ -34,6 +34,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "emoji-mart": "^5.5.2",
+    "gpt-tokenizer": "^2.1.2",
     "i18next": "^23.7.11",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-resources-to-backend": "^1.2.0",
@@ -53,7 +54,6 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "tiktoken": "^1.0.11",
     "ua-parser-js": "^1.0.37",
     "undici": "^6.2.1",
     "zustand": "^4.4.7"
