@@ -6,6 +6,7 @@ import { useSettingsStore } from "@/store/settings-store";
 import Placeholder from "@/components/ui/placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTokens } from "@/hooks/chat/use-tokens";
+import ChatFloatingInput from "@/components/chat/chat-floating-input";
 
 export const ChatInputAreaContext = createContext({
   back: () => {},
@@ -54,11 +55,13 @@ export default function Footer() {
             <Skeleton className="shrink-0 w-14 h-14"></Skeleton>
           </div>
         }>
-        {useSimpleInput ? (
-          <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
-        ) : (
-          <ChatInputArea value={state} onInput={setValue}></ChatInputArea>
-        )}
+        <ChatFloatingInput>
+          {useSimpleInput ? (
+            <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
+          ) : (
+            <ChatInputArea value={state} onInput={setValue}></ChatInputArea>
+          )}
+        </ChatFloatingInput>
       </Placeholder>
     </ChatInputAreaContext.Provider>
   );
