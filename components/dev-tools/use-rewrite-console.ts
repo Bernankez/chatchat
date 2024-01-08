@@ -1,3 +1,4 @@
+import { IdGenerator } from "@/lib/utils";
 import { DevLog, useDevStore } from "@/store/dev-store";
 import { useLatest } from "ahooks";
 import { useEffect, useRef } from "react";
@@ -14,7 +15,7 @@ export function useRewriteConsole(enable = true) {
     if (content.length > 0 && typeof content[0] === "string" && content[0].includes("[chatchat DevTools]")) {
       return;
     }
-    setLog([...log.current, { type, content }]);
+    setLog([...log.current, { type, content, id: IdGenerator() }]);
   }
 
   function rewriteConsole() {

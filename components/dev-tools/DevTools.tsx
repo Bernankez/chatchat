@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useDevStore } from "@/store/dev-store";
 import { Switch } from "../ui/switch";
@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import clsx from "clsx";
 import { useRewriteConsole } from "./use-rewrite-console";
 import { Separator } from "../ui/separator";
+import { IdGenerator } from "@/lib/utils";
 
 export default function DevTools() {
   const [open, setOpen] = useState(false);
@@ -68,7 +69,6 @@ export default function DevTools() {
   }
 
   function handleLog(content: any[]) {
-    console.trace(content);
     try {
       if (content.length === 1) {
         const res = content[0];
@@ -81,6 +81,8 @@ export default function DevTools() {
           );
         } else if (typeof res === "string") {
           return <div>{res.trim()}</div>;
+        } else {
+          return <div>{res.toString()}</div>;
         }
       } else if (content.length > 0) {
         let strArr = true;
@@ -95,8 +97,8 @@ export default function DevTools() {
         }
         return (
           <div className="flex flex-col gap-1">
-            {content.map((c, i) => (
-              <div key={i}>{handleLog([c])}</div>
+            {content.map((c) => (
+              <div key={IdGenerator()}>{handleLog([c])}</div>
             ))}
           </div>
         );
@@ -145,9 +147,9 @@ export default function DevTools() {
           <pre className="p-3 bg-muted rounded-sm">
             <div>Console</div>
             <div className="max-h-[20rem] overflow-y-auto">
-              {log.map((l, i) => (
-                <>
-                  <Separator key={i}></Separator>
+              {log.map((l) => (
+                <Fragment key={l.id}>
+                  <Separator></Separator>
                   <div
                     className={clsx("break-word whitespace-pre-wrap", [
                       l.type === "error" ? "bg-red-50 text-red-500" : "",
@@ -156,7 +158,7 @@ export default function DevTools() {
                     ])}>
                     {handleLog(l.content)}
                   </div>
-                </>
+                </Fragment>
               ))}
             </div>
           </pre>

@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 export interface DevLog {
+  id: string;
   type: "log" | "error" | "warn" | "info";
   content: any;
 }
