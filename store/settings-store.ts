@@ -15,8 +15,6 @@ interface SettingsState {
   setSwapEnter: (value: boolean) => void;
   useSimpleInput: boolean;
   setUseSimpleInput: (value: boolean) => void;
-  useFloatingInput: boolean;
-  setUseFloatingInput: (value: boolean) => void;
   useClearButton: boolean;
   setUseClearButton: (value: boolean) => void;
   resetInterfaceSettings: () => void;
@@ -60,12 +58,6 @@ export const useSettingsStore = create<SettingsState>()(
         setUseSimpleInput: (value) => {
           set((state) => {
             state.useSimpleInput = value;
-          });
-        },
-        useFloatingInput: false,
-        setUseFloatingInput: (value) => {
-          set((state) => {
-            state.useFloatingInput = value;
           });
         },
         useClearButton: false,

@@ -5,6 +5,7 @@ import { Slot } from "@radix-ui/react-slot";
 
 export interface PlaceholderProps {
   children?: React.ReactNode;
+  style?: React.CSSProperties;
   skeleton?: string | React.ReactNode;
 }
 
@@ -19,7 +20,7 @@ const Placeholder = forwardRef<HTMLButtonElement, PlaceholderProps>(function Pla
     return skeleton;
   }
 
-  return <Skeleton className={skeleton}></Skeleton>;
+  return <Skeleton className={skeleton} style={props.style}></Skeleton>;
 });
 
 export default Placeholder;
