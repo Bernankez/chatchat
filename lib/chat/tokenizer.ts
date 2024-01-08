@@ -1,5 +1,5 @@
 import { encode, encodeChatGenerator } from "gpt-tokenizer";
-import { ChatMessage, ChatModel } from "./types";
+import { ChatMessage, ChatModel } from "../types";
 import BigNumber from "bignumber.js";
 
 type EncodeModel = Parameters<typeof encodeChatGenerator>[1];

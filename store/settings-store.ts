@@ -3,7 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, createStorage } from "./storage";
 import { ChatModel } from "@/lib/types";
-import { modelList } from "@/lib/const";
+import { modelList } from "@/lib/utils/const";
 
 interface SettingsState {
   /** ------ Interface Settings ------ */

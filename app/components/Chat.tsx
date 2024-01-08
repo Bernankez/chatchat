@@ -1,7 +1,7 @@
 import ChatList from "@/components/chat/chat-list";
 import Placeholder from "@/components/ui/placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useChat } from "@/hooks/use-chat";
+import { useChat } from "@/hooks/chat/use-chat";
 
 export default function Chat() {
   const { conversation } = useChat();

@@ -1,5 +1,5 @@
 import { UAParser } from "ua-parser-js";
-import { Fn } from "./types";
+import { Fn } from "../types";
 
 export function isDefined<T>(val: T): val is NonNullable<T> {
   return val !== undefined && val !== null;

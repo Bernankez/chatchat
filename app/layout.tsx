@@ -9,7 +9,7 @@ import "@/styles/content.css";
 import "katex/dist/katex.min.css";
 import { Toaster } from "@/components/ui/sonner";
 import DevTools from "@/components/dev-tools/DevTools";
-import { isDev } from "@/lib/is";
+import { isDev } from "@/lib/utils/is";
 import DevToolsProvider from "@/components/dev-tools/DevToolsProvider";
 
 const inter = Inter({

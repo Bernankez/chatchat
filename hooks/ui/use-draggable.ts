@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTargetElement, type BasicTarget } from "@/lib/dom";
+import { getTargetElement, type BasicTarget } from "@/lib/utils/dom";
 import { useEventListener } from "ahooks";
 
 export type PointerType = "mouse" | "touch" | "pen";

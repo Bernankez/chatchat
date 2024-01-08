@@ -1,5 +1,5 @@
 "use client";
-import { isDev } from "@/lib/is";
+import { isDev } from "@/lib/utils/is";
 import { DevState, useDevStore } from "@/store/dev-store";
 import { createContext } from "react";
 

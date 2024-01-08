@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import SettingsPanel from "@/components/settings/settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
-import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
+import { breakpointsTailwind, useBreakpoint } from "@/hooks/ui/use-breakpoint";
 import { useMounted } from "@/hooks/use-mounted";
 
 export const asideWidth = "24rem";

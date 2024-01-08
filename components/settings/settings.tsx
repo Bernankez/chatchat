@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import TooltipButton from "../ui/tooltip-button";
 import SettingsPanel from "./settings-panel";
 import { useSettingsStore } from "@/store/settings-store";
-import { breakpointsTailwind, useBreakpoint } from "@/hooks/use-breakpoint";
+import { breakpointsTailwind, useBreakpoint } from "@/hooks/ui/use-breakpoint";
 import Placeholder from "../ui/placeholder";
 import { Toggle } from "../ui/toggle";
 import { useTranslation } from "react-i18next";

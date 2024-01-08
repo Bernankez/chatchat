@@ -4,7 +4,7 @@ import { Toggle } from "../ui/toggle";
 import { useSettingsStore } from "@/store/settings-store";
 import { useMemo } from "react";
 import { asideWidth } from "@/app/components/Aside";
-import { useScrollTopBottom } from "@/hooks/use-scroll-top-bottom";
+import { useScrollTopBottom } from "@/hooks/ui/use-scroll-top-bottom";
 
 export default function FloatingButtons() {
   const { settingsPanelOpen, setSettingsPanelOpen } = useSettingsStore();

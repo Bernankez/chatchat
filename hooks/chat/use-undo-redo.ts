@@ -1,6 +1,6 @@
 import { KeyboardEvent } from "react";
 import { InputEl } from "./use-input-state";
-import { isMacOS } from "@/lib/is";
+import { isMacOS } from "@/lib/utils/is";
 
 export interface UseUndoRedoOptions {
   undo?: () => void;

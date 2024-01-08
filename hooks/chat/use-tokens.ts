@@ -1,6 +1,6 @@
 import { useEffect, useState, useTransition } from "react";
 import { useChat } from "./use-chat";
-import { calculatePrice, encodeMessages, encodeText } from "@/lib/tokenizer";
+import { calculatePrice, encodeMessages, encodeText } from "@/lib/chat/tokenizer";
 
 export function useTokens(text: string) {
   const { messagesWithPrompts, conversation } = useChat();

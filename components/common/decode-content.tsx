@@ -1,4 +1,4 @@
-import useMarkdownIt from "@/hooks/use-markdown-it";
+import useMarkdownIt from "@/hooks/chat/use-markdown-it";
 import MarkdownIt from "markdown-it";
 import { useEffect, useState } from "react";
 

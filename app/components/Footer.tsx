@@ -5,7 +5,7 @@ import { useHistoryTravel } from "ahooks";
 import { useSettingsStore } from "@/store/settings-store";
 import Placeholder from "@/components/ui/placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTokens } from "@/hooks/use-tokens";
+import { useTokens } from "@/hooks/chat/use-tokens";
 
 export const ChatInputAreaContext = createContext({
   back: () => {},

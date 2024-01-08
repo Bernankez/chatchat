@@ -1,17 +1,17 @@
-import { isDefined } from "@/lib/is";
-import { bindKey, unbindKey } from "@rwh/react-keystrokes";
+import { isDefined } from "@/lib/utils/is";
+import { bindKeyCombo, unbindKeyCombo } from "@rwh/react-keystrokes";
 import { useEffect, useState } from "react";
 
 export type FilterFn = (event?: KeyboardEvent) => boolean | void;
 export type OnPressedWithRepeatFn = (isPressed: boolean) => void;
 
-export interface UseKeyOptions {
+export interface UseKeyComboOptions {
   preventDefault?: boolean;
   filter?: FilterFn;
   onPressedWithRepeat?: OnPressedWithRepeatFn;
 }
 
-export function useKey(key: string, options?: UseKeyOptions | FilterFn) {
+export function useKeyCombo(keyCombo: string, options?: UseKeyComboOptions | FilterFn) {
   const [isPressed, setIsPressed] = useState(false);
   let preventDefault: boolean, filter: FilterFn | undefined, onPressedWithRepeat: OnPressedWithRepeatFn | undefined;
   if (isDefined(options)) {
@@ -25,8 +25,8 @@ export function useKey(key: string, options?: UseKeyOptions | FilterFn) {
     }
   }
 
-  const _onPressedWithRepeat: Parameters<typeof bindKey>[1] = ({ originalEvent }) => {
-    const event = originalEvent;
+  const _onPressedWithRepeat: Parameters<typeof bindKeyCombo>[1] = ({ finalKeyEvent }) => {
+    const event = finalKeyEvent.originalEvent;
     if (preventDefault) {
       event?.preventDefault();
     }
@@ -40,22 +40,22 @@ export function useKey(key: string, options?: UseKeyOptions | FilterFn) {
     setIsPressed(_isPressed);
   };
 
-  const _onReleased: Parameters<typeof bindKey>[1] = () => {
+  const _onReleased: Parameters<typeof bindKeyCombo>[1] = () => {
     setIsPressed(false);
   };
 
-  const handler: Parameters<typeof bindKey>[1] = {
+  const handler: Parameters<typeof bindKeyCombo>[1] = {
     onPressedWithRepeat: _onPressedWithRepeat,
     onReleased: _onReleased,
   };
 
   useEffect(() => {
     // Set listeners on specific elements may cause some problems, so just use global key events here
-    bindKey(key, handler);
+    bindKeyCombo(keyCombo, handler);
     return () => {
-      unbindKey(key, handler);
+      unbindKeyCombo(keyCombo, handler);
     };
   }, []);
 
-  return { isPressed, unbind: () => unbindKey(key, handler) };
+  return { isPressed, unbind: () => unbindKeyCombo(keyCombo, handler) };
 }

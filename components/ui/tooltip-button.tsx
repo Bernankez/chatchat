@@ -1,4 +1,4 @@
-import { isDefined } from "@/lib/is";
+import { isDefined } from "@/lib/utils/is";
 import { Button, ButtonProps } from "./button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 import { ReactNode, forwardRef } from "react";

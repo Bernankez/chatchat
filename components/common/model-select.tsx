@@ -1,4 +1,4 @@
-import { modelList } from "@/lib/const";
+import { modelList } from "@/lib/utils/const";
 import { Button, ButtonProps } from "../ui/button";
 import {
   DropdownMenu,

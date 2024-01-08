@@ -3,13 +3,13 @@ import { useContext, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Placeholder from "../ui/placeholder";
 import TooltipButton from "../ui/tooltip-button";
-import { useResizeObserver } from "@/hooks/use-resize-observer";
+import { useResizeObserver } from "@/hooks/ui/use-resize-observer";
 import { useMounted } from "@/hooks/use-mounted";
-import { useInputState } from "@/hooks/use-input-state";
-import { useUndoRedo } from "@/hooks/use-undo-redo";
-import useSendWrap from "@/hooks/use-send-wrap";
+import { useInputState } from "@/hooks/chat/use-input-state";
+import { useUndoRedo } from "@/hooks/chat/use-undo-redo";
+import useSendWrap from "@/hooks/chat/use-send-wrap";
 import { ChatInputAreaContext } from "@/app/components/Footer";
-import { useChat } from "@/hooks/use-chat";
+import { useChat } from "@/hooks/chat/use-chat";
 import { useSettingsStore } from "@/store/settings-store";
 
 export interface ChatInputAreaSimpleProps {

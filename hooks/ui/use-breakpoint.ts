@@ -1,7 +1,7 @@
-import { isDefined } from "@/lib/is";
+import { isDefined } from "@/lib/utils/is";
 import { increaseWithUnit } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { useMounted } from "./use-mounted";
+import { useMounted } from "../use-mounted";
 
 export const breakpointsTailwind = {
   "sm": 640,

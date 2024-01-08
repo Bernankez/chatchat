@@ -7,7 +7,7 @@ import { Label } from "../ui/label";
 import ChatSendWrap from "../chat/chat-send-wrap";
 import ClearCacheButton from "./clear-cache-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { modelList } from "@/lib/const";
+import { modelList } from "@/lib/utils/const";
 import { ChatModel } from "@/lib/types";
 import { Textarea } from "../ui/textarea";
 import { Slider } from "../ui/slider";

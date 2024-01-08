@@ -1,5 +1,5 @@
 import { type RefObject, useMemo, useState, useEffect } from "react";
-import useDraggable from "@/hooks/use-draggable";
+import useDraggable from "@/hooks/ui/use-draggable";
 import { useEventListener } from "ahooks";
 
 export type Side = "top" | "bottom" | "left" | "right";

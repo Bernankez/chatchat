@@ -1,5 +1,5 @@
-import { ChatMessage, Message } from "./types";
-import { IdGenerator } from "./utils";
+import { ChatMessage, Message } from "../types";
+import { IdGenerator } from "../utils";
 
 export function getMessagesWithPrompts<T extends ChatMessage | Message>(messages: T[], prompts?: string): T[] {
   if (messages.length === 0 || !prompts) {

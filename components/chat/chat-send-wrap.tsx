@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { useKeys } from "@/hooks/use-keys";
+import { useKeys } from "@/hooks/chat/use-keys";
 import { useMounted } from "@/hooks/use-mounted";
 import { cloneElement } from "react";
 import { useTranslation } from "react-i18next";
