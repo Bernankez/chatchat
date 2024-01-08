@@ -28,7 +28,7 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
   const lng = i18n.resolvedLanguage;
   const { resolvedTheme } = useTheme();
   const [clickOutside, setClickOutside] = useState(false);
-  const { back, forward } = useContext(ChatInputAreaContext);
+  const { back, forward, tokens } = useContext(ChatInputAreaContext);
   const textareaProps = useInputState(props.value, props.onInput);
   const { useClearButton } = useSettingsStore();
   const { send, clear, archive } = useChat();
@@ -120,8 +120,9 @@ export default function ChatInputArea(props: ChatInputAreaProps) {
               onEmojiSelect={(picked: any) => insertEmoji(picked.native)}></Picker>
           </PopoverContent>
         </Popover>
-        {/* TODO calculate tokens */}
-        2000/1222
+        {tokens.current.count}/{tokens.total.count}
+        Price:
+        {tokens.current.price}/{tokens.total.price}
       </div>
       <textarea
         data-ignore-focus="panel"

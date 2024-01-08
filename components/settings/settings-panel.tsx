@@ -8,7 +8,7 @@ import ChatSendWrap from "../chat/chat-send-wrap";
 import ClearCacheButton from "./clear-cache-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { modelList } from "@/lib/const";
-import { Model } from "@/lib/types";
+import { ChatModel } from "@/lib/types";
 import { Textarea } from "../ui/textarea";
 import { Slider } from "../ui/slider";
 import SettingsPanelCollapse from "./settings-panel-collapse";
@@ -43,7 +43,7 @@ export default function SettingsPanel(props: SettingsPanelProps) {
     setUseClearButton,
     resetInterfaceSettings,
   } = useSettingsStore();
-  const [model, setModel] = useState<Model>(defaultModel);
+  const [model, setModel] = useState<ChatModel>(defaultModel);
   const [prompts, setPrompts] = useState(defaultPrompts);
   const [temperature, setTemperature] = useState([defaultTemperature]);
   const [stream, setStream] = useState(useStream);
@@ -90,7 +90,7 @@ export default function SettingsPanel(props: SettingsPanelProps) {
       <SettingsPanelCollapse icon="lucide:settings" title={t("panel.defaultSettings")} className="grid gap-4 py-4 pr-1">
         <Label className="flex items-center justify-between">
           <div>{t("panel.defaultModel")}</div>
-          <Select value={model} onValueChange={(val) => setModel(val as Model)}>
+          <Select value={model} onValueChange={(val) => setModel(val as ChatModel)}>
             <SelectTrigger className="max-w-[12rem]">
               <SelectValue></SelectValue>
             </SelectTrigger>

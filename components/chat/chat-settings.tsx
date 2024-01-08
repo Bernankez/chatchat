@@ -13,7 +13,7 @@ import useSendWrap from "@/hooks/use-send-wrap";
 import { useChat } from "@/hooks/use-chat";
 import { Skeleton } from "../ui/skeleton";
 import ModelSelect from "../common/model-select";
-import { Model } from "@/lib/types";
+import { ChatModel } from "@/lib/types";
 import { useChatStore } from "@/store/chat-store";
 
 export default function ChatSettings() {
@@ -22,7 +22,7 @@ export default function ChatSettings() {
   const { conversation, historyList, setConversation } = useChat();
   const [open, setOpen] = useState(false);
   const [prompts, setPrompts] = useState("");
-  const [model, setModel] = useState<Model>(conversation.model);
+  const [model, setModel] = useState<ChatModel>(conversation.model);
   const [temperature, setTemperature] = useState([0.6]);
   const textareaProps = useSendWrap({
     send() {

@@ -3,6 +3,7 @@ import { Message } from "@/lib/types";
 import { createConversation, useChatStore } from "@/store/chat-store";
 import { useMemo, useState } from "react";
 import { IdGenerator } from "@/lib/utils";
+import { getMessagesWithPrompts } from "@/lib/chat";
 
 export interface UseChatOptions {}
 
@@ -17,20 +18,21 @@ export function useChat(options?: UseChatOptions) {
     [history],
   );
 
+  const messages = useMemo(() => conversation.messages, [conversation]);
+
+  const messagesWithPrompts = useMemo(() => getMessagesWithPrompts(messages, conversation.prompts), [conversation]);
+
   // TODO loading state push to message list
   async function send(text: string) {
     const newMessages: Message[] = [...conversation.messages, { role: "user", content: text, id: IdGenerator() }];
     setConversation({ ...conversation, messages: [...newMessages] });
-    const messagesWithPrompt = newMessages.map(({ role, content }) => ({
-      role,
-      content,
-    }));
-    if (conversation.prompts) {
-      messagesWithPrompt.unshift({
-        role: "assistant",
-        content: conversation.prompts,
-      });
-    }
+    const messagesWithPrompt = getMessagesWithPrompts(
+      newMessages.map(({ role, content }) => ({
+        role,
+        content,
+      })),
+      conversation.prompts,
+    );
     try {
       const abortCtrl = new AbortController();
       setController(abortCtrl);
@@ -99,6 +101,8 @@ export function useChat(options?: UseChatOptions) {
     loading,
     generating,
     historyList,
+    messages,
+    messagesWithPrompts,
 
     setConversation,
     send,

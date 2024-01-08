@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createJSONStorage, createStorage } from "./storage";
-import { Model } from "@/lib/types";
+import { ChatModel } from "@/lib/types";
 import { modelList } from "@/lib/const";
 
 interface SettingsState {
@@ -23,8 +23,8 @@ interface SettingsState {
   useStream: boolean;
   setUseStream: (value: boolean) => void;
   /** ------ Default Settings ------ */
-  defaultModel: Model;
-  setDefaultModel: (value: Model) => void;
+  defaultModel: ChatModel;
+  setDefaultModel: (value: ChatModel) => void;
   defaultPrompts: string;
   setDefaultPrompts: (value: string) => void;
   defaultTemperature: number;
