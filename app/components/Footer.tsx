@@ -1,7 +1,7 @@
 import ChatInputAreaSimple from "@/components/chat/chat-input-area-simple";
 import ChatInputArea from "@/components/chat/chat-input-area";
-import { createContext } from "react";
-import { useHistoryTravel } from "ahooks";
+import { createContext, useMemo } from "react";
+import { useHistoryTravel, useMap } from "ahooks";
 import { useSettingsStore } from "@/store/settings-store";
 import Placeholder from "@/components/ui/placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,6 +28,20 @@ export default function Footer() {
   const state = value || "";
   const { totalPrice, totalTokens, currentPrice, currentTokens } = useTokens(state);
 
+  const tokens = useMemo(
+    () => ({
+      total: {
+        count: totalTokens,
+        price: totalPrice,
+      },
+      current: {
+        count: currentTokens,
+        price: currentPrice,
+      },
+    }),
+    [totalTokens, totalPrice, currentTokens, currentPrice],
+  );
+
   return (
     // TODO markdown editor
     // TODO disable send when receiving response
@@ -35,17 +49,9 @@ export default function Footer() {
       value={{
         back,
         forward,
-        tokens: {
-          total: {
-            count: totalTokens,
-            price: totalPrice,
-          },
-          current: {
-            count: currentTokens,
-            price: currentPrice,
-          },
-        },
+        tokens,
       }}>
+      TODO add settings bar
       <Placeholder
         skeleton={
           <div className="flex gap-3">
