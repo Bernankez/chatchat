@@ -127,13 +127,11 @@ const Affix = React.forwardRef<AffixRef, AffixProps>((props, ref) => {
   const prepareMeasure = () => {
     status.current = AffixStatus.Prepare;
     measure();
-    if (process.env.NODE_ENV === "test") {
-      (props as any)?.onTestUpdatePosition?.();
-    }
   };
 
   const updatePosition = throttleByAnimationFrame(() => prepareMeasure());
   useResizeObserver(placeholderNodeRef.current, updatePosition);
+  useResizeObserver(fixedNodeRef.current, updatePosition);
 
   const lazyUpdatePosition = throttleByAnimationFrame(() => {
     // Check position change before measure to make Safari smooth

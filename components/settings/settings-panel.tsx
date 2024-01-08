@@ -39,6 +39,8 @@ export default function SettingsPanel(props: SettingsPanelProps) {
     setSwapEnter,
     useSimpleInput,
     setUseSimpleInput,
+    useFloatingInput,
+    setUseFloatingInput,
     useClearButton,
     setUseClearButton,
     resetInterfaceSettings,
@@ -136,6 +138,10 @@ export default function SettingsPanel(props: SettingsPanelProps) {
         <Label className="flex items-center justify-between">
           <div>{t("panel.useSimpleInput")}</div>
           <Switch checked={useSimpleInput} onCheckedChange={setUseSimpleInput}></Switch>
+        </Label>
+        <Label className="flex items-center justify-between">
+          <div>{t("panel.useFloatingInput")}</div>
+          <Switch checked={useFloatingInput} onCheckedChange={setUseFloatingInput}></Switch>
         </Label>
         <Label className="flex items-center justify-between gap-3">
           <div>{t("panel.useClearButton")}</div>

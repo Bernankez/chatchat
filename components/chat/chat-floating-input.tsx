@@ -27,7 +27,7 @@ const ChatFloatingInput = forwardRef<AffixRef, ChatFloatingInputProps>(function 
 
   return floating ? (
     <Affix ref={ref} onChange={onChange} offsetBottom={0}>
-      <div className={clsx(className, "p-4 bg-background transition")}>{children}</div>
+      <div className={clsx(className, "py-4 bg-background transition")}>{children}</div>
     </Affix>
   ) : (
     children

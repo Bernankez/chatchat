@@ -25,7 +25,7 @@ export const ChatInputAreaContext = createContext({
 
 export default function Footer() {
   const { value, setValue, back, forward } = useHistoryTravel<string>();
-  const { useSimpleInput } = useSettingsStore();
+  const { useSimpleInput, useFloatingInput } = useSettingsStore();
   const state = value || "";
   const { totalPrice, totalTokens, currentPrice, currentTokens } = useTokens(state);
 
@@ -55,7 +55,7 @@ export default function Footer() {
             <Skeleton className="shrink-0 w-14 h-14"></Skeleton>
           </div>
         }>
-        <ChatFloatingInput>
+        <ChatFloatingInput floating={useFloatingInput}>
           {useSimpleInput ? (
             <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
           ) : (

@@ -147,15 +147,16 @@ export default function DevTools() {
           <pre className="p-3 bg-muted rounded-sm">
             <div>Console</div>
             <div className="max-h-[20rem] overflow-y-auto">
-              {log.map((l) => (
+              {log.map((l, i) => (
                 <Fragment key={l.id}>
                   <Separator></Separator>
                   <div
-                    className={clsx("break-word whitespace-pre-wrap", [
+                    className={clsx("flex gap-1 break-word whitespace-pre-wrap", [
                       l.type === "error" ? "bg-red-50 text-red-500" : "",
                       l.type === "warn" ? "bg-yellow-50 text-yellow-500" : "",
                       l.type === "info" ? "bg-blue-50 text-blue-500" : "",
                     ])}>
+                    <span className="text-blue-500">{i + 1}</span>
                     {handleLog(l.content)}
                   </div>
                 </Fragment>
