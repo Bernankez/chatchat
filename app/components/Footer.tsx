@@ -6,7 +6,6 @@ import { useSettingsStore } from "@/store/settings-store";
 import Placeholder from "@/components/ui/placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTokens } from "@/hooks/chat/use-tokens";
-import ChatFloatingInput from "@/components/chat/chat-floating-input";
 
 export const ChatInputAreaContext = createContext({
   back: () => {},
@@ -25,7 +24,7 @@ export const ChatInputAreaContext = createContext({
 
 export default function Footer() {
   const { value, setValue, back, forward } = useHistoryTravel<string>();
-  const { useSimpleInput, useFloatingInput } = useSettingsStore();
+  const { useSimpleInput } = useSettingsStore();
   const state = value || "";
   const { totalPrice, totalTokens, currentPrice, currentTokens } = useTokens(state);
 
@@ -55,13 +54,11 @@ export default function Footer() {
             <Skeleton className="shrink-0 w-14 h-14"></Skeleton>
           </div>
         }>
-        <ChatFloatingInput floating={useFloatingInput}>
-          {useSimpleInput ? (
-            <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
-          ) : (
-            <ChatInputArea value={state} onInput={setValue}></ChatInputArea>
-          )}
-        </ChatFloatingInput>
+        {useSimpleInput ? (
+          <ChatInputAreaSimple value={state} onInput={setValue}></ChatInputAreaSimple>
+        ) : (
+          <ChatInputArea value={state} onInput={setValue}></ChatInputArea>
+        )}
       </Placeholder>
     </ChatInputAreaContext.Provider>
   );
